@@ -124,9 +124,9 @@ namespace 委托和lambda
 
             #endregion
             /***/
-            Console.WriteLine("asdfasdf");
-            泛型委托();
-            Console.ReadKey();
+            //Console.WriteLine("asdfasdf");
+            //泛型委托();
+            //Console.ReadKey();
           }
 
 
@@ -250,7 +250,7 @@ namespace 委托和lambda
          * 2.参数列表之间不能用 lambda 操作符 =>,而是在参数列表前添加关键字 delegate，强调匿名方法转换成一个委托类型
          * 3.无参数的匿名方法，匿名方法运行彻底省略参数列表，前提是主体中不使用任何参数，而且委托类型只要求“值”（不要求将参数标记为out 或ref）
          * 粒子：  delegate { return Console.ReadLine() != ""; } 它可以转换成任意要求返回 bool 的委托类型，而不管为u他需要多少个参数。
-         * 
+         * 4.匿名方法在某些情况下可以彻底省略参数列表。
          */
 
         delegate void NumberChanger(int n);
@@ -273,6 +273,7 @@ namespace 委托和lambda
 
             public static void Min()
             {                // 使用匿名方法创建委托实例
+
 
                 // delegate (int x) 匿名方法 强调匿名方法转换成一个委托类型
                 NumberChanger nc = delegate (int x)
@@ -350,7 +351,8 @@ namespace 委托和lambda
          * 如果目的地在lambda 外部，c#不允许在匿名方法内部使用跳转语句（break，goto，continue）
          * 6.
          * lambda 中引用的参数和局部变量只是用于lambda 主体
-         * 7.编译器的确定性赋值分析机制在lambda 表达式内部检测不到对外部局部变量惊喜促使化的情况
+         * 7.
+         * 编译器的 确定性赋值分析机制 在lambda 表达式内部检测不到对外部局部变量进行初始化的情况
          * 
          */
         public void 表达式lambda()
@@ -379,6 +381,26 @@ namespace 委托和lambda
             // int f=1, s=2;
             // Func<int, int, bool> func = (f, s) => f > s;
             //7.外部值改变不影响主题内参数值的变化
+            //8.当表达式外部参数值改变时，表达式内部无法检测（值类型，复制值）
+            //int mun ;
+            //Func<string, bool> func = text => int.TryParse(text, out mun);
+            //if (func("1"))
+            //{
+
+            //    // 确定性赋值分析机制 
+            //    //使用了未赋值的局部变量
+            //    Console.WriteLine(mun);
+            //}
+            ///*********************************/
+            //int n1;
+            //Func<int, bool> func1 = i => 22 == (n1 = i);
+            //if (func1(22))
+            //{
+            //    Console.WriteLine(n1);
+            //}
+
+
+
 
         }
 
@@ -391,6 +413,11 @@ namespace 委托和lambda
         #region 4.泛型委托
         /*
          * 在..net 中 委托类型不具备结构相等性
+         * 他只考虑 方法名和方法签名
+         * 
+         * 由于不具备结构相等性，所以两个委托之间不能相互转换
+         * 即使两个委托类型的形参和返回类型完全一致
+         * 
          * 
          * 
          * system.func     系列委托代表有 返回值 的方法
@@ -398,6 +425,7 @@ namespace 委托和lambda
          * 特点：
          * 1.可以不必自定义委托类型
          * 2.由此而来的是代码的可读性下降
+         * 3.最后一个类型参数总是委托的返回类型
          * 
          * 
          * system.Action   系列委托代表返回 void 的方法
