@@ -127,7 +127,18 @@ namespace 委托和lambda
             //Console.WriteLine("asdfasdf");
             //泛型委托();
             //Console.ReadKey();
-          }
+
+            #region 表达式树
+
+            #endregion
+
+            #region 闭包
+            Closure();
+
+            #endregion
+
+            Console.ReadKey();
+        }
 
 
         #region 1.委托概述
@@ -353,7 +364,9 @@ namespace 委托和lambda
          * lambda 中引用的参数和局部变量只是用于lambda 主体
          * 7.
          * 编译器的 确定性赋值分析机制 在lambda 表达式内部检测不到对外部局部变量进行初始化的情况
-         * 
+         * 但是能访问外部变量 两者概念不要混淆喽,
+         * 值得一提是的，局部变量的生命期一般都和他的作用域绑定，但是如果lambda 表达式 捕捉到的变量，会根据
+         * 表达式创建的委托可能会具有在一般情况下更长或更短的生存期
          */
         public void 表达式lambda()
         {
@@ -452,6 +465,73 @@ namespace 委托和lambda
 
         #region 5.表达式树
 
+        #endregion
+
+        #region C#中的闭包
+        /*
+         * 闭包：
+         * 1.闭包（Closure）是词法闭包（Lexical Closure）的简称，是引用了自由变量的函数。
+         * 2.这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。
+         * 3.有另一种说法认为闭包是由函数和与其相关的引用环境组合而成的实体。
+         * 
+         * 当我们执行 action 时，它输出了我们预期的结果。请注意，
+         * 当我们执行时，原始的“x”此时已经脱离了它当初的变量环境，但它仍然能用。
+         * 
+         * lambda委托 改变变量的值时，lambda外部可以访问已改动值
+         * 
+         * 
+         * 
+         */
+        private int some;
+        public Program(int some)
+        {
+            this.some = some;
+        }
+        public int AM(int x) => x + some;
+     
+        public static void Closure()
+        {
+            //var x = 1;
+            //Action action = () =>
+            //{
+            //    var y = 2;
+            //    var result = x + y;
+            //    Console.Out.WriteLine("result = {0}", result);
+            //};
+            // action();
+
+            //委托数组
+            //Action[] actions = new Action[10];
+
+            //for (var i = 0; i < actions.Length; i++)
+            //{
+            //    actions[i] = () =>
+            //    {
+            //        Console.WriteLine(i);
+            //    };
+            //}
+
+            //foreach (var item in actions)
+            //{
+            //    item();
+            //}
+
+            //C# 5.0之前捕捉循环变量的解决方案
+            //应避免在匿名函数中循环捕捉变量
+            var it = new string[] {"A","B","v" };
+            var ac = new List<Action>();
+            foreach (string item in it)
+            {
+                string _it = item;
+                ac.Add(() => { Console.WriteLine(_it); });
+
+                foreach (Action em in ac)
+                {
+                    em();
+                }
+            }
+
+        }
         #endregion
     }
 }

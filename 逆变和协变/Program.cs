@@ -79,8 +79,6 @@ namespace 逆变和协变
             {
                 Console.WriteLine("dsfasd");
             }
-         
-
         }
 
         #region 委托的逆变和协变
