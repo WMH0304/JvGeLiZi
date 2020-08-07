@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace 委托和lambda
 {
@@ -130,10 +131,11 @@ namespace 委托和lambda
 
             #region 表达式树
 
+         //   Lambdas.Stat();
             #endregion
 
             #region 闭包
-            Closure();
+        //    Closure();
 
             #endregion
 
@@ -461,9 +463,116 @@ namespace 委托和lambda
         #endregion
 
 
-
-
         #region 5.表达式树
+        /*
+         * 表达式树 ：现在接触的只是和linq 配套查询。
+         * 
+         * 或者谁他针对的是一个集合
+         * 可以使用他啦转换数据可是，嗯？我记得好像有个枚举接口IEmuntable 也可以实现，好像是这个
+         */
+
+        public class A
+        {
+            public int AID { get; set; }
+            public string Class { get; set; }
+        }
+
+        public class B
+        {
+            public int BID { get; set; }
+            public string BName { get; set; }
+            public int AID { get; set; }
+        }
+        public class Lambdas
+        {
+           
+         public static void test()
+            {
+                List<A> hahah = new List<A>()
+            {
+                new A(){AID =1,Class ="st"},
+                new A(){AID =2,Class="新2"},
+                new A(){AID =3,Class="新3"},
+                new A(){AID =4,Class="新4"},
+                new A(){AID =5,Class="新5"},
+            };
+                hahah.Where(p => p.Class.ToUpper() == "ST");
+                foreach (var item in hahah)
+                {
+                    Console.WriteLine(item.Class);
+                }
+            }
+
+
+            /// <summary>
+            /// 如何使用表达式树来生成动态查询
+            /// </summary>
+            public static void Stat()
+            {
+
+                string[] companies = { "Consolidated Messenger", "Alpine Ski House", "Southridge Video", "City Power & Light",
+                   "Coho Winery", "Wide World Importers", "Graphic Design Institute", "Adventure Works",
+                   "Humongous Insurance", "Woodgrove Bank", "Margie's Travel", "Northwind Traders",
+                   "Blue Yonder Airlines", "Trey Research", "The Phone Company",
+                   "Wingtip Toys", "Lucerne Publishing", "Fourth Coffee" };
+
+                // The IQueryable data to query.  要查询的IQueryable数据。
+                IQueryable<String> queryableData = companies.AsQueryable<string>();
+
+                // Compose the expression tree that represents the parameter to the predicate.  组成表示谓词的参数的表达式树。
+                ParameterExpression pe = Expression.Parameter(typeof(string), "company");
+
+                // ***** Where(company => (company.ToLower() == "coho winery" || company.Length > 16)) *****  
+                // Create an expression tree that represents the expression 'company.ToLower() == "coho winery"'.  
+                //创建一个表达式树，表示表达式'company.ToLower() == "coho winery"
+                Expression left = Expression.Call(pe, typeof(string).GetMethod("ToLower", System.Type.EmptyTypes));
+                Expression right = Expression.Constant("coho winery");
+                Expression e1 = Expression.Equal(left, right);
+
+                // Create an expression tree that represents the expression 'company.Length > 16'.  
+                //创建表示表达式‘company’的表达式树。长度> 16”。
+                left = Expression.Property(pe, typeof(string).GetProperty("Length"));
+                right = Expression.Constant(16, typeof(int));
+                Expression e2 = Expression.GreaterThan(left, right);
+
+                // Combine the expression trees to create an expression tree that represents the  
+                //组合表达式树以创建表示
+                // expression '(company.ToLower() == "coho winery" || company.Length > 16)'.  
+                Expression predicateBody = Expression.OrElse(e1, e2);
+
+                // Create an expression tree that represents the expression  
+                //创建表示该表达式的表达式树
+                // 'queryableData.Where(company => (company.ToLower() == "coho winery" || company.Length > 16))'  
+                MethodCallExpression whereCallExpression = Expression.Call(
+                    typeof(Queryable),
+                    "Where",
+                    new Type[] { queryableData.ElementType },
+                    queryableData.Expression,
+                    Expression.Lambda<Func<string, bool>>(predicateBody, new ParameterExpression[] { pe }));
+                // ***** End Where *****  
+
+                // ***** OrderBy(company => company) *****  
+                // Create an expression tree that represents the expression  
+                //创建表示该表达式的表达式树
+                // 'whereCallExpression.OrderBy(company => company)'  
+                MethodCallExpression orderByCallExpression = Expression.Call(
+                    typeof(Queryable),
+                    "OrderBy",
+                    new Type[] { queryableData.ElementType, queryableData.ElementType },
+                    whereCallExpression,
+                    Expression.Lambda<Func<string, string>>(pe, new ParameterExpression[] { pe }));
+                // ***** End OrderBy *****  
+
+                // Create an executable query from the expression tree.  
+                //从表达式树创建可执行查询。
+                IQueryable<string> results = queryableData.Provider.CreateQuery<string>(orderByCallExpression);
+
+                // Enumerate the results.  枚举结果。 
+                foreach (string company in results)
+                    Console.WriteLine(company);
+
+            }
+        }
 
         #endregion
 
@@ -479,7 +588,8 @@ namespace 委托和lambda
          * 
          * lambda委托 改变变量的值时，lambda外部可以访问已改动值
          * 
-         * 
+         * 一般来说变量都是有生存期的
+         * 闭包就是内部变量可以访问外部变量的函数
          * 
          */
         private int some;
