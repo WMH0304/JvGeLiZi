@@ -74,7 +74,7 @@ namespace 事件
     public class Thermostat
     {
         public Action<float> action { get; set; }
-
+          
         public float CurrentT { set; get; }
     }
 
