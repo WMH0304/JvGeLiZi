@@ -79,7 +79,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ref和out 详解", "ref和o
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "打印粒子_WPF", "打印粒子\打印粒子_WPF.csproj", "{14F074DE-4CC8-49E8-942F-5FE9A42C4084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "逆变和协变", "逆变和协变\逆变和协变.csproj", "{162D3E63-3C33-4876-BAF2-13D6C7BFAC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "逆变和协变", "逆变和协变\逆变和协变.csproj", "{162D3E63-3C33-4876-BAF2-13D6C7BFAC99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "事件", "事件\事件.csproj", "{359D7659-D31D-48C2-BA6E-7D7BE682CC31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -559,6 +561,18 @@ Global
 		{162D3E63-3C33-4876-BAF2-13D6C7BFAC99}.Release|x64.Build.0 = Release|Any CPU
 		{162D3E63-3C33-4876-BAF2-13D6C7BFAC99}.Release|x86.ActiveCfg = Release|Any CPU
 		{162D3E63-3C33-4876-BAF2-13D6C7BFAC99}.Release|x86.Build.0 = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|x64.Build.0 = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Debug|x86.Build.0 = Debug|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|x64.ActiveCfg = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|x64.Build.0 = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|x86.ActiveCfg = Release|Any CPU
+		{359D7659-D31D-48C2-BA6E-7D7BE682CC31}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

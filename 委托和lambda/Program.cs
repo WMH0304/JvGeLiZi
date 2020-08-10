@@ -131,11 +131,16 @@ namespace 委托和lambda
 
             #region 表达式树
 
-         //   Lambdas.Stat();
+            //   Lambdas.Stat();
+
+
+            analysis_tree analysis_Tree = new analysis_tree();
+            analysis_tree.tree_main();
+
             #endregion
 
             #region 闭包
-        //    Closure();
+            //    Closure();
 
             #endregion
 
@@ -466,7 +471,7 @@ namespace 委托和lambda
         #region 5.表达式树
         /*
          * 表达式树 ：现在接触的只是和linq 配套查询。
-         * 
+         *  主要应用于对数据的操作
          * 或者谁他针对的是一个集合
          * 可以使用他啦转换数据可是，嗯？我记得好像有个枚举接口IEmuntable 也可以实现，好像是这个
          */
@@ -502,6 +507,8 @@ namespace 委托和lambda
                     Console.WriteLine(item.Class);
                 }
             }
+
+
 
 
             /// <summary>
@@ -573,6 +580,65 @@ namespace 委托和lambda
 
             }
         }
+
+
+        #region 表达式树解析
+
+        public class analysis_tree
+        {
+            public static void tree_main()
+            {
+                Expression<Func<int, int, bool>> expression;
+                expression = (x, y) => x > y;
+                Console.WriteLine("--------------{0}---------------", expression);
+                PrintNode(expression.Body, 0);
+            }
+
+            // Exception 表示在应用程序执行过程中发生的错误。
+            public static void PrintNode(Expression exception, int indent)
+            {
+                if (exception is BinaryExpression)
+                    PrintNode(exception as BinaryExpression, indent);
+                else
+                    PrintNode(exception, indent);
+            }
+
+            private static void PrintNode(BinaryExpression expression, int indent)
+            {
+                PrintNode(expression.Left, indent + 1);
+                PrintSigle(expression, indent);
+                PrintNode(expression.Right, indent + 1);
+            }
+
+            private static void PrintSigle(Expression expression, int indent)
+            {
+                Console.WriteLine("{0," + indent * 5 + "}{1}", "", NodeTostring(expression));
+            }
+
+            private static string NodeTostring(Expression expression)
+            {
+                switch (expression.NodeType)
+                {
+                    case ExpressionType.Multiply:
+                        return "*";
+                    case ExpressionType.Add:
+                        return "+";
+                    case ExpressionType.Divide:
+                        return "/";
+                    case ExpressionType.Subtract:
+                        return "-";
+                    case ExpressionType.GreaterThan:
+                        return ">";
+                    case ExpressionType.LessThan:
+                        return "<";
+                    default:
+                        return expression.ToString() + "(" + expression.NodeType.ToString() + ")";
+                }
+            }
+        }
+
+        #endregion
+
 
         #endregion
 
