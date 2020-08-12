@@ -4,8 +4,13 @@ namespace 事件
 {
 
     /*
-     * publish - subcribe 
+     * https://baike.baidu.com/item/c%23%E5%A7%94%E6%89%98
+     * 
+     * publish - subcribe （observer 设计模式）
      *  发布   -  订阅
+     *  Observer设计模式是为了定义对象间的一种一对多的依赖关系，
+     *  以便于当一个对象的状态改变时，其他依赖于它的对象会被自动告知并更新。
+     *  Observer模式是一种松耦合的设计模式。
      *  
      *  多播委托是什么？
      *  定义是什么？
@@ -24,8 +29,8 @@ namespace 事件
      */
 
     #region 订阅者
-        
-        class Cooler
+
+    class Cooler
     {
         public Cooler(float fa)
         {
@@ -33,7 +38,7 @@ namespace 事件
         }
 
         public float Fa { get; set; }
-
+        //Cooler
         public void OnTC(float newfa)
         {
             if (newfa >Fa)
@@ -55,7 +60,7 @@ namespace 事件
         }
 
         public float Fa { get; set; }
-
+        //Heat
         public void OnTC(float newfa)
         {
             if (newfa < Fa)
@@ -134,30 +139,59 @@ namespace 事件
             Cooler cooler = new Cooler(50);
             Heat heat = new Heat(100);
             string tea;
-            //创建监听 （创建订阅事件）
-            thermostat.action += heat.OnTC;
-            thermostat.action += cooler.OnTC;
-
-            thermostat.action -= cooler.OnTC;
+            ////创建监听 （创建订阅事件）
+            //thermostat.action += heat.OnTC;
+            //thermostat.action += cooler.OnTC;
+            ////使用 -=会返回一个新的实例
+            //thermostat.action -= cooler.OnTC;
 
             /*
               IL_0058:  castclass  class [System.Runtime]System.Action`1<float32>
               IL_005d:  callvirt   instance void '事件'.Thermostat::set_action(class [System.Runtime]System.Action`1<float32>)
-
-             
              */
 
             //Console.WriteLine("esss");
             //tea = Console.ReadLine();
             //thermostat.CurrentT = int.Parse(tea);
+
+            //使用 + - 委托操作符
+
+            Action<float> action1;
+            Action<float> action2;
+            Action<float> action3;
+
+            action1 = heat.OnTC;
+            action2 = cooler.OnTC;
+            Console.WriteLine("/***********/");
+            //合并委托
+            action3 = action1 + action2; //老一 
+            action3(60);
+            Console.WriteLine("/************/");
+            //去除指定委托 action2
+            action3 = action1 - action2;//note： 使用赋值操作符会清空之前所有的订阅者  老一：我变成null啦，快给我赋值吧
+            action3(60);
+            /*
+             * += 创建一个监听（订阅者）或者说再绑定一个方法
+             * -= 取消一个监听（订阅者）或者说取消委托对一个方法的绑定
+             *  + 合并委托（订阅者） 或者说执行两个委托方法
+             *  
+             *  - 删除委托 取消指定的委托方法的调用
+             *  
+             *  system.delegate.combine() 将两个委托的调用列表连接在一起。
+             *  
+             *  system.delegate.remove()  从一个委托的调用列表中移除另一个委托的所有调用列表。
+             *  无论是 + - 是 += -=   他梦的内部机制都是通过 静态方法 system.delegate.combine()  和 system.delegate.remove() 实现的
+             *  
+             *  有趣的是combine()  允许两参数都为 null ，如果只有一个为 null 就返回非空的那个，两个都为 null 就返回 null
+             *  
+             *  这就可以解释 当你调用某一个事件时，即使这个事件的指向为空他也不会报错。
+             */
         }
     }
     #endregion
 
 
-    #region  -= 操作符应用于委托会返回一个新实例
-
-    #endregion
+   
 
 
     class Program
