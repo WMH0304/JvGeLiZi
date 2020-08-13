@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace 算法练习
 {
@@ -14,22 +15,60 @@ namespace 算法练习
         */
         static void Main(string[] args)
         {
-            int[] strArry = { 3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48 };
+            //int[] strArry = { 3, 44, 38, 5, 47, 15, 36, 26, 27, 2, 46, 4, 19, 50, 48 };
             //测试冒泡
             //var newArry = BubbleSort(strArry);
             //for (int i = 0; i < newArry.Length; i++)
             //{
             //    System.Console.WriteLine(newArry[i]);
             //}
-            var newArry = SelectionSort(strArry);
-            for (int i = 0; i < newArry.Length; i++)
-            {
-                System.Console.WriteLine(newArry[i]);
-            }
+            //var newArry = SelectionSort(strArry);
+            //for (int i = 0; i < newArry.Length; i++)
+            //{
+            //    System.Console.WriteLine(newArry[i]);
+            // }
+
+
+            //实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
+            Console.WriteLine(IsUnique("eolksmd"));
+
 
             System.Console.ReadKey();
         }
 
+
+        #region 实现一个算法，确定一个字符串 s 的所有字符是否全都不同。
+
+      
+        public static bool IsUnique(string astr)
+        {
+            //// Dictionary 表示键和值的集合。
+            //var dic = new Dictionary<char, int>();
+            //foreach (var item in astr)
+            //{
+            //    if (dic.ContainsKey(item))
+            //        return false;
+            //    else
+            //    {
+            //        dic.Add(item, 1);
+            //    }
+            //}
+            //return true;
+
+            List<char> vs = new List<char>();
+            foreach (var item in astr)
+            {
+                vs.Add(item);
+            }
+            int vs_count = vs.Count();
+            int vs_D_count=  vs.Distinct().Count();
+            if (vs_count == vs_D_count)return true;
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
 
         #region 冒泡排序
         /* 冒泡排序
