@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static System.Console;
+using static 集合.Employee;
 
 namespace 集合
 {
@@ -551,35 +552,171 @@ namespace 集合
 
     #endregion
 
-    #region 字典（映射表和散列表）
+    #region Dictionary 字典（映射表和散列表）
 
     /*
-     * 字典 
+     * Dictionary 字典 
      * 
-     * 字典允许按照某个键来访问元素，所以他又叫 映射表或散列表
+     * Dictionary 字典允许按照某个键来访问元素，所以他又叫 映射表或散列表
      * 
-     * 字典的特性是能根据键快速查找值，也可以自由添加和删除元素，这一点和list 十分相似，但散列表却没有在内存中移动后续元素的开销。
+     * Dictionary 字典的特性是能根据键快速查找值，也可以自由添加和删除元素，这一点和list 十分相似，但散列表却没有在内存中移动后续元素的开销。
+     * 
+     * Dictionary 字典在插入数据时
+     * 
+     * Dictionary 字典中的类型必须重写object 类中的 GetHashCode()方法。只要字典类确定元素位置
+     * GetHashCode()方法 的实现代码必须满足以下条件
+     * 1.相同对象应返回相同的值
+     * 2.不同对象可以返回相同的值
+     * 3.不能抛出异常
+     * 4.至少使用一个实例字段
+     * 5.散列代码最好在对象的生存期中不发生变化
+     * 6.执行较快，计算开销不大
+     * 7.散列代码值应平 均分布在 int 可以存储的整个数字范围上
+     * 
+     * 
+     * 为什么散列代码值应平均分布在 int 呢？
+     * 如果两个键返回的散列码 （就是执行 gethascode 时返回的 哈希码
      * 
      * 
      * 
+     * note：字典的性能取决于 GetHashCode() 方法的实现
      * 
      * 
      */
-   
+        public class Employee
+    {
+        private string _name;
+        private decimal _salary;
+        private readonly EmployeeId _id;
+
+        public Employee(EmployeeId id, string name, decimal salary)
+        {
+            _id = id;
+            _name = name;
+            _salary = salary;
+        }
+        public class EmployeeIdException : Exception
+        {
+            public EmployeeIdException(string message) : base(message) { }
+        }
+
+        public struct EmployeeId : IEquatable<EmployeeId>
+        {
+            private readonly char _prefix;
+            private readonly int _number;
+
+            public EmployeeId(string id)
+            {
+                if (id == null) throw new ArgumentNullException(nameof(id));
+
+                _prefix = (id.ToUpper())[0];
+                int numLength = id.Length - 1;
+                try
+                {
+                    _number = int.Parse(id.Substring(1, numLength > 6 ? 6 : numLength));
+                }
+                catch (FormatException)
+                {
+                    throw new EmployeeIdException("Invalid EmployeeId format");
+                }
+            }
+
+            public override string ToString() => _prefix.ToString() + $"{_number,6:000000}";
+
+            public override int GetHashCode() => (_number ^ _number << 16) * 0x15051505;
+
+            public bool Equals(EmployeeId other) => (_prefix == other._prefix && _number == other._number);
+
+            public override bool Equals(object obj) => Equals((EmployeeId)obj);
+
+            public static bool operator ==(EmployeeId left, EmployeeId right) => left.Equals(right);
+
+            public static bool operator !=(EmployeeId left, EmployeeId right) => !(left == right);
+        }
+
+
+        public override string ToString() => $"{_id.ToString()}: {_name, -20} {_salary :C}";
+
+    }
+        
+
+       
+
     public class Dictionarys
     {
         public static void Dictionarys_main()
         {
-            //实例化一个字典类
-            var dict = new Dictionary<int, string>()
-            {
-                [1] = "one",
-                [3] ="three"
-            };
-            dict.Add(2,"22");
+            var idTony = new EmployeeId("C3755");
+            var tony = new Employee(idTony, "Tony Stewart", 379025.00m);
 
-            foreach (var item in dict)
-                Console.WriteLine("    "+ item.Key + "    " + item.Value +dict.Count );
+            var idCarl = new EmployeeId("F3547");
+            var carl = new Employee(idCarl, "Carl Edwards", 403466.00m);
+
+            var idKevin = new EmployeeId("C3386");
+            var kevin = new Employee(idKevin, "Kevin Harwick", 415261.00m);
+
+            var idMatt = new EmployeeId("F3323");
+            var matt = new Employee(idMatt, "Matt Kenseth", 1589390.00m);
+
+            var idBrad = new EmployeeId("D3234");
+            var brad = new Employee(idBrad, "Brad Keselowski", 322295.00m);
+
+            var employees = new Dictionary<EmployeeId, Employee>(31)
+            {
+                [idTony] = tony,
+                [idCarl] = carl,
+                [idKevin] = kevin,
+                [idMatt] = matt,
+                [idBrad] = brad
+            };
+
+            foreach (var employee in employees.Values)
+            {
+                WriteLine(employee);
+            }
+
+            while (true)
+            {
+                Write("Enter employee id (X to exit)> ");
+                var userInput = ReadLine();
+                userInput = userInput.ToUpper();
+                if (userInput == "X") break;
+
+                EmployeeId id;
+                try
+                {
+                    id = new EmployeeId(userInput);
+
+
+                    Employee employee;
+                    if (!employees.TryGetValue(id, out employee))
+                    {
+                        WriteLine("Employee with id {0} does not exist", id);
+                    }
+                    else
+                    {
+                        WriteLine(employee);
+                    }
+                }
+                catch (EmployeeIdException ex)
+                {
+                    WriteLine(ex.Message);
+                }
+            }
+
+
+
+
+            ////实例化一个字典类
+            //var dict = new Dictionary<int, string>()
+            //{
+            //    [1] = "one",
+            //    [3] ="three"
+            //};
+            //dict.Add(2,"22");
+
+            //foreach (var item in dict)
+            //    Console.WriteLine("    "+ item.Key + "    " + item.Value +dict.Count );
 
 
         }
@@ -591,12 +728,181 @@ namespace 集合
 
     #endregion
 
+    #region LookUp类
+    /*
+     * LookUp  表示映射到一个或多个值的各个键的集合。
+     * 
+     * LookUp 和dictionary 非常相似都是以键值对的形式存储数据
+     * 
+     * LookUp 实际上就将键映射到一个值集合上 ，
+     * 
+     * lookup 在 system.core 中实现 ，用system.linq 命名空间定义
+     * 
+     * 有趣的是 lookup 并并不能像 dictionary 那样直接调用 ， 需要调用 ToLookup()方法，
+     * 
+     * 这个是快速查询的之中方式
+     */
+    public class Racer : IComparable<Racer>, IFormattable
+    {
+        public Racer(int id, string firstName, string lastName, string country, int wins)
+        {
+            this.Id = id;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Country = country;
+            this.Wins = wins;
+        }
+
+        public Racer(int id, string firstName, string lastName, string country)
+          : this(id, firstName, lastName, country, wins: 0)
+        { }
+
+        public int Id { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Country { get; set; }
+        public int Wins { get; set; }
+
+        public override string ToString() => $"{FirstName} {LastName}";
+
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (format == null) format = "N";
+            switch (format.ToUpper())
+            {
+                case null:
+                case "N": // name
+                    return ToString();
+                case "F": // first name
+                    return FirstName;
+                case "L": // last name
+                    return LastName;
+                case "W": // Wins
+                    return $"{ToString()}, Wins: {Wins}";
+                case "C": // Country
+                    return $"{ToString()}, Country: {Country}";
+                case "A": // All
+                    return $"{ToString()}, {Country} Wins: {Wins}";
+                default:
+                    throw new FormatException(String.Format(formatProvider,
+                          "Format {0} is not supported", format));
+            }
+        }
+
+        public string ToString(string format) => ToString(format, null);
+
+        public int CompareTo(Racer other)
+        {
+            if (other == null) return -1;
+            int compare = string.Compare(LastName, other.LastName);
+            if (compare == 0)
+                return string.Compare(FirstName, other.FirstName);
+            return compare;
+        }
+    }
+
+
+    #endregion
+
+
+    #region 有序字典 SortedDictionary
+
+    /*
+     * SortedDictionary 有序字典   表示根据键进行排序的键/值对的集合。
+     *  
+     * SortedDictionary 二叉搜索树 根据期元素根据键进行排序 实现了
+     * 
+     * SortedDictionary<TKey, TValue> : ICollection<KeyValuePair<TKey, TValue>>, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable, IDictionary<TKey, TValue>, IReadOnlyCollection<KeyValuePair<TKey, TValue>>, IReadOnlyDictionary<TKey, TValue>,ICollection, IDictionary
+     * 
+     * SortedDictionary 如果键的类型不能排序,则还可以创建一个实现 ICo,parer<TKey>接口的比较强，将比较强用作有序字典的构造函数的一个参数
+     * 
+     * SortedDictionary 和 sortedlist 及其相似 只不过  sortedlist 实现一个数组的列表 ，而 SortedDictionary 实现一个字典
+     * 
+     * SortedDictionary 和 sortedlist 的比较
+     * 1.SortedDictionary 使用的内存比 sortedlist 大
+     * 2.SortedDictionary 的元素的插入和删除操作比较快（原因是他借鉴了链表的存储结构）
+     * 3.在用已排好需的数据填充集合是，不需要修改容量  sortedlist 比较快 （原因是他的存储结构借鉴了list,所以他本身也具备了list的一些特性）
+     * 
+     * 
+     */
+    #endregion
+
+    #region 集
+    /* 
+     * 集  可以包含不重复元素的集合成为“集”
+     * 
+     * .net 中包含了两个集 （Hash<T> 和SortedSet<T> 他们的区别在于 hash 包含不重复元素的无序列表 ，而SortedSet 则是包含了不重复的有序列表）
+     * 
+     * 他们实现了 ISet<T> 接口 （提供可以创建合集，交集，或者给出一个集和另一个集的超集或子集）
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     */
+    #endregion
+
+    #region 性能
+
+    /*
+     * 前面讲诉的集合类中，有好个集合的功能都是一样的，当时正纳闷呢，
+     * 这两个集合（sortedlist 和 sorteddictionary）能做的事情是一样的，为什么还要多次一举呢?
+     * 现在知道了 其根本原因就是性能的差异
+     * 
+     * 例如：
+     *  sortedlist 使用的内存少（时间换空间）
+     *  sorteddictionary 检索速度快（空间换时间）
+     *  
+     *  操作时间用大写的 O 记号
+     *  1. O(1)      表示无论集合中有多少数据，操作需要的时间不变  栗子 array list add方法具有 O(1)行为
+     *  
+     *  2. O(log n)  表示操作需要的使劲按随集合中元素增加而增加但每个元素所需要的时间时对数曲线 ，在执行插入操作时
+     *  
+     *  
+     *  3. O(n)  表示 对于集合执行一个操作需要的时间在最坏情况下时时 N , 如果需要重写给集合分配内存， 
+     *  arraylist 的 add 方法就是一个 O(n)操作 改变容量，需要复制列表，
+     *  复制时间随元素的增加而增加 sorteddictionary 具有 O(log n) 行为 而sortedlist 的时间复杂度时 O(n)
+     *  原因时 sorteddictionary 是树形结构，在树形结构中插入元素的效率要比 列表高很多
+     *  
+     *  
+     *  各集合的各操作的时间复杂度图片在
+     *  image 文件夹里面
+     *  
+     * 
+     *  
+     *  
+     */
+
+
+
+    #endregion
+
+    #region 小结
+
+    /*
+     * list 一个可以动态增长的数组列表
+     * 
+     * queue 一个以先进先出的方式访问元素的集合
+     * 
+     * stack 一个以先进后出的方式访问元素的集合
+     * 
+     * linkedlist 一个已元素指向的值访问元素（搜索操作较慢），但可以快速插入和删除元素的集合
+     * 
+     * dictionary 通过 键值对的方式存储数据的集合 ，搜索和插入操作都比较快（可以说是链表和列表的结合体）
+     * 
+     * set  一个以无重复项作为最大卖点的集合，可分为 hashset (无序列表) 和 sortedset(有序列表)
+     * 
+     */
+    #endregion
 
     #region 启动类
     class Program
     {
         static void Main(string[] args)
         {
+
             #region List
             ///List_test.listTest(); //List
             #endregion
@@ -655,13 +961,226 @@ namespace 集合
             #endregion
 
             #region 字典
+            // Dictionarys.Dictionarys_main();
+            #endregion
 
+            #region lookup
+            /*
+            var racers = new List<Racer>();
+            racers.Add(new Racer(26, "Jacques", "Villeneuve", "Canada", 11));
+            racers.Add(new Racer(18, "Alan", "Jones", "Australia", 12));
+            racers.Add(new Racer(11, "Jackie", "Stewart", "United Kingdom", 27));
+            racers.Add(new Racer(15, "James", "Hunt", "United Kingdom", 10));
+            racers.Add(new Racer(5, "Jack", "Brabham", "Australia", 14));
 
+            var lookupRacers = racers.ToLookup(r => r.Country);
 
-            Dictionarys.Dictionarys_main();
+            foreach (Racer r in lookupRacers["Australia"])
+            {
+                WriteLine(r);
+            }
+            */
+            #endregion
+
+            #region 有序列表
+
+            /*
+             //用字符串创建一个新的字符串排序字典
+
+             SortedDictionary<string, string> openWith =
+                 new SortedDictionary<string, string>();
+
+             // Add some elements to the dictionary. There are no 
+             // duplicate keys, but some of the values are duplicates.
+             //向字典中添加一些元素。没有
+             //重复的键，但有些值是重复的。
+             openWith.Add("txt", "notepad.exe");
+             openWith.Add("bmp", "paint.exe");
+             openWith.Add("dib", "paint.exe");
+             openWith.Add("rtf", "wordpad.exe");
+
+             // The Add method throws an exception if the new key is 
+             // already in the dictionary.
+             //如果新键是，添加方法会抛出一个异常
+             //已经在字典里了
+             try
+             {
+                 openWith.Add("txt", "winword.exe");
+             }
+             catch (ArgumentException)
+             {
+                 Console.WriteLine("已经存在一个Key = \"txt\"的元素。");
+             }
+
+             // The Item property is another name for the indexer, so you 
+             // can omit its name when accessing elements. 
+             // 项属性是索引器的另一个名称，因此您
+             // 可以在访问元素时省略其名称。
+             Console.WriteLine("键（） = \"rtf\", value = {0}.",
+                 openWith["rtf"]);
+
+             // The indexer can be used to change the value associated
+             //索引器可用于更改关联的值
+             // with a key.
+             //用钥匙。
+             openWith["rtf"] = "winword.exe";
+             Console.WriteLine("For key = \"rtf\", value = {0}.",
+                 openWith["rtf"]);
+
+             // If a key does not exist, setting the indexer for that key
+             // adds a new key/value pair.
+             //如果键不存在，为该键设置索引器
+             //添加一个新的键 / 值对。
+             openWith["doc"] = "winword.exe";
+
+             // The indexer throws an exception if the requested key is
+             // not in the dictionary.
+             //如果请求的键是，索引器抛出异常
+             //字典里没有。
+             try
+             {
+                 Console.WriteLine("For key = \"tif\", value = {0}.",
+                     openWith["tif"]);
+             }
+             catch (KeyNotFoundException)
+             {
+                 Console.WriteLine("Key = \"tif\" is not found.");
+             }
+
+             // When a program often has to try keys that turn out not to
+             // be in the dictionary, TryGetValue can be a more efficient 
+             // way to retrieve values.
+             //当一个程序经常不得不尝试钥匙，结果不是
+             //在字典中，TryGetValue可能是一个更有效的
+             //检索值的方法。
+             string value = "";
+             if (openWith.TryGetValue("tif", out value))
+             {
+                 Console.WriteLine("For key = \"tif\", value = {0}.", value);
+             }
+             else
+             {
+                 Console.WriteLine("Key = \"tif\" is not found.");
+             }
+
+             // ContainsKey can be used to test keys before inserting 
+             // them.
+             // ContainsKey可用于在插入之前测试密钥
+             // 他们。
+             if (!openWith.ContainsKey("ht"))
+             {
+                 openWith.Add("ht", "hypertrm.exe");
+                 Console.WriteLine("Value added for key = \"ht\": {0}",
+                     openWith["ht"]);
+             }
+
+             // When you use foreach to enumerate dictionary elements,
+             // the elements are retrieved as KeyValuePair objects.
+             //当使用foreach枚举字典元素时，
+             //元素被检索为KeyValuePair对象。
+             Console.WriteLine();
+             foreach (KeyValuePair<string, string> kvp in openWith)
+             {
+                 Console.WriteLine("Key = {0}, Value = {1}",
+                     kvp.Key, kvp.Value);
+             }
+
+             // To get the values alone, use the Values property.
+             //要单独获取值，请使用values属性。
+             SortedDictionary<string, string>.ValueCollection valueColl =
+                 openWith.Values;
+
+             // The elements of the ValueCollection are strongly typed
+             // with the type that was specified for dictionary values.
+             //值集合的元素是强类型的
+             //使用为字典值指定的类型
+             Console.WriteLine();
+             foreach (string s in valueColl)
+             {
+                 Console.WriteLine("Value = {0}", s);
+             }
+
+             // To get the keys alone, use the Keys property.
+             //要单独获取密钥，请使用keys属性。
+             SortedDictionary<string, string>.KeyCollection keyColl =
+                 openWith.Keys;
+
+             // The elements of the KeyCollection are strongly typed
+             // with the type that was specified for dictionary keys.
+             //键集合的元素是强类型的
+             //为字典键指定的类型。
+             Console.WriteLine();
+             foreach (string s in keyColl)
+             {
+                 Console.WriteLine("Key = {0}", s);
+             }
+
+             // Use the Remove method to remove a key/value pair.
+             //使用Remove方法删除键/值对。
+             Console.WriteLine("\nRemove(\"doc\")");
+             openWith.Remove("doc");
+
+             if (!openWith.ContainsKey("doc"))
+             {
+                 Console.WriteLine("Key \"doc\" is not found.");
+             }
+
+            */
+            #endregion
+
+            #region 集
+
+            //HashSet  不重复元素 的无序集合
+
+            var ct = new HashSet<string>(){"1","2","3" };
+
+            var tt = new HashSet<string>() { "1", "2" };
+
+            var pt = new HashSet<string>() { "one","two","three"};
+
+            if (pt.Add("4"))
+            {
+                Console.WriteLine("4 add");
+            }
+            if (!ct.Add("2"))
+            {
+                //元素不重复的集合。无序列表
+                Console.WriteLine("已存在数据");
+            }
+            //验证 tt 中 是否每个元素都包含在 ct
+            if (tt.IsSubsetOf(ct))
+            {
+                Console.WriteLine("tt 是 ct 自集");
+            }
+            //严重 tt 中是否有 ct 没有的额外元素
+            if (ct.IsSupersetOf(tt))
+            {
+                Console.WriteLine("ct 是 tt 超集");
+            }
+
+            tt.Add("haha");
+            if (pt.Overlaps(tt))
+            {
+                Console.WriteLine("两个集合间，是否有通用元素。（俗称交集）");
+            }
+
+            //返回不重复的元素的有序列表
+            var at = new SortedSet<string>(ct);
+            at.UnionWith(pt);
+            at.UnionWith(tt);
+            Console.WriteLine();
+
+            Console.WriteLine("输出参数");
+
+            foreach (var item in at)
+            {
+                Console.WriteLine(item);
+            }
 
 
             #endregion
+
+         
 
             ReadLine();
         }

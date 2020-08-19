@@ -85,7 +85,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "事件", "事件\事件.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "集合", "集合\集合.csproj", "{4464AC43-4331-462C-8875-4A2EB5A59EC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQ信息连发", "QQ信息连发\QQ信息连发.csproj", "{5FA801E5-1593-4FBF-BEE3-4FDE659CF879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QQ信息连发", "QQ信息连发\QQ信息连发.csproj", "{5FA801E5-1593-4FBF-BEE3-4FDE659CF879}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "image", "image", "{46FEC2C3-ED09-414F-B60C-17DC51F9051C}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\TK\Desktop\各集合的各操作时间复杂的度.PNG = C:\Users\TK\Desktop\各集合的各操作时间复杂的度.PNG
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
