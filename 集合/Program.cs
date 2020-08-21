@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 using static 集合.Employee;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Collections.Immutable;
+using System.Collections.Concurrent;
+using System.IO;
 
 namespace 集合
 {
@@ -897,11 +904,720 @@ namespace 集合
      */
     #endregion
 
+
+    /*》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
+
+    #region BitArray
+    /*
+     * BitArray 点阵列 ： 一个紧凑型的位置数组，使用布尔值表示，其中 true 表示位是开始的（1），false 表示位是关闭的（0）
+     * 说明文档介绍
+     * (管理位值的压缩数组，该值表示为布尔值，其中 true 表示位是打开的 (1)，false 表示位是关闭的 (0)。)
+     * 
+     * BitArray 点阵列 ： 位于 system.collections 中 是一个引用类型，包含一个 int 数组 ，其中每 32  位使用一个新整数
+     * 
+     * BitArray 点阵列 ：  BitArray : ICollection, IEnumerable, ICloneable
+     * 
+     * BitArray 点阵列 ： 成员
+     * 1.and  针对指定的 BitArray 中的相应元素对当前 BitArray 中的元素执行按位“与”运算。
+     * 2.
+     * 
+     * 
+     * 
+     * 
+     */
+
+    class BitArrays
+    {
+        public static void BitArrays_main()
+        {
+            BitArray bit1 = new BitArray(4);
+            BitArray bit2 = new BitArray(4);
+            BitArray bit3 = new BitArray(4);
+
+            bit1[0] = bit2[0] = false;
+            bit1[1] = bit2[1] = true;
+            bit1[2] = bit2[2] = false;
+            bit1[3] = bit2[3] = true;
+
+            bit3[0] = true;
+            bit3[1] = false;
+            bit3[2] = false;
+            bit3[3] = false;
+
+
+            //.And 与
+            Console.WriteLine(bit1.And(bit2).Count);
+            PrintValues(bit1, bit1.Count);
+            //.Xor 异或  如果a、b两个值不相同，则异或结果为1。如果a、b两个值相同，异或结果为0。
+            Console.WriteLine(bit1.Xor(bit3).Count);
+            PrintValues(bit1, bit1.Count);
+            //.Not 反转所有位值
+            bit2.Not();
+            PrintValues(bit2, bit2.Count);
+
+            //修改指定位置值
+            bit2.Set(1,true);
+            PrintValues(bit2, bit2.Count);
+            //批量修改值
+            bit3.SetAll(true);
+            PrintValues(bit3, bit2.Count);
+
+            //获取指定索引处的值
+            Console.WriteLine(bit3.Not().Get(0));
+
+
+        }
+        public static void PrintValues(IEnumerable my,int myl)
+        {
+            int i = myl;
+            foreach (Object obj in my)
+            {
+                if (i <= 0)
+                {
+                    i = myl;
+                    Console.WriteLine();
+                }
+                i--;
+                Console.Write("{0,8}", obj);
+            }
+            Console.WriteLine();
+        }
+
+
+    }
+
+    #endregion
+
+    #region BitVector32
+    /*
+     * 
+     * BitVector32 提供一个简单结构，该结构以 32 位内存存储布尔值和小整数。
+     * 
+     * BitVector32 功能和 BitArray 一样 但 BitVector32 是值类型 必须给其赋值（位数值）而 BitArray 可以动态添加位数值（类似于list）
+     */
+
+        class BitVector32s
+    {
+        public static void BitVector32s_main()
+        {
+            //使用CreateMask方法创建一个遮罩
+            // create a mask using the CreateMask method
+            var bits1 = new BitVector32();
+            int bit1 = BitVector32.CreateMask();
+            int bit2 = BitVector32.CreateMask(bit1);
+            int bit3 = BitVector32.CreateMask(bit2);
+            int bit4 = BitVector32.CreateMask(bit3);
+            int bit5 = BitVector32.CreateMask(bit4);
+
+            bits1[bit1] = true;
+            bits1[bit2] = false;
+            bits1[bit3] = true;
+            bits1[bit4] = true;
+            bits1[bit5] = true;
+            WriteLine(bits1);
+
+            // create a mask using an indexer  使用索引器创建掩码
+            bits1[0xabcdef] = true;
+            WriteLine(bits1);
+
+            int received = 0x79abcdef;
+
+            BitVector32 bits2 = new BitVector32(received);
+            WriteLine(bits2);
+
+            // sections: FF EEE DDD CCCC BBBBBBBB
+            // AAAAAAAAAAAA
+            BitVector32.Section sectionA = BitVector32.CreateSection(0xfff);
+            BitVector32.Section sectionB = BitVector32.CreateSection(0xff, sectionA);
+            BitVector32.Section sectionC = BitVector32.CreateSection(0xf, sectionB);
+            BitVector32.Section sectionD = BitVector32.CreateSection(0x7, sectionC);
+            BitVector32.Section sectionE = BitVector32.CreateSection(0x7, sectionD);
+            BitVector32.Section sectionF = BitVector32.CreateSection(0x3, sectionE);
+
+            WriteLine($"Section A: {IntToBinaryString(bits2[sectionA], true)}");
+            WriteLine($"Section B: {IntToBinaryString(bits2[sectionB], true)}");
+            WriteLine($"Section C: {IntToBinaryString(bits2[sectionC], true)}");
+            WriteLine($"Section D: {IntToBinaryString(bits2[sectionD], true)}");
+            WriteLine($"Section E: {IntToBinaryString(bits2[sectionE], true)}");
+            WriteLine($"Section F: {IntToBinaryString(bits2[sectionF], true)}");
+        }
+        static string IntToBinaryString(int bits, bool removeTrailingZero)
+        {
+            var sb = new StringBuilder(32);
+
+            for (int i = 0; i < 32; i++)
+            {
+                if ((bits & 0x80000000) != 0)
+                {
+                    sb.Append("1");
+                }
+                else
+                {
+                    sb.Append("0");
+                }
+                bits = bits << 1;
+            }
+
+            string s = sb.ToString();
+            if (removeTrailingZero)
+            {
+                return s.TrimStart('0');
+            }
+            else
+            {
+                return s;
+            }
+        }
+
+    }
+
+
+    #endregion
+
+    #region 可观察集合  ObservableCollection<T>
+    /*
+     *  ObservableCollection 表示一个动态数据集合，在添加项、移除项或刷新整个列表时，此集合将提供通知。
+     *  
+     *  之前做 WPF 的时候用过这个集合，用于动态显示 datagrid 数据，啊哈，现在又看到你了
+     *  
+     *  ObservableCollection<T> : Collection<T>, INotifyCollectionChanged, INotifyPropertyChanged
+     *  
+     *  ObservableCollection 派生自 collection （用于创建集合的类，上面的很多集合都派生自他）基类 ，collection 可以自定义集合 ，并在内部使用 List<T>类
+     *  
+     *  ObservableCollection 重写了 collection 中的虚方法 setitem 和 removeitem 用以触发 CollectionChanged 事件（当集合更改时发生）
+     *  
+     *  ObservableCollection 可以使用 INotifyCollectionChanged (向侦听器通知动态更改，如在添加或移除项时或在刷新整个列表时。)接口 注册 CollectionChanged 事件
+     *  
+     *  ObservableCollection 由于继承了 collection 所以 ObservableCollection 也支持 collection 的一系列的方法 
+     *  
+     *  ObservableCollection 总的来说 就是一个声明了当集合改变时发生的事件的动态显示集合（不知道是否也具有这个特性）
+     *  
+     */
+
+    class Oc_data
+    {
+        public int one { get; set; }
+
+        public string two { get; set; }
+
+        public string three { get; set; }
+
+    }
+     
+
+    class ObservableCollections 
+    {
+        public static void ObservableCollection_main()
+        {
+            ObservableCollection<Oc_data> oc_Datas = new ObservableCollection<Oc_data>();
+            oc_Datas.CollectionChanged += Data_CollectionChanged;
+            for (int i = 0; i < 10; i++)
+            {
+                //向动态集合中填充数据
+                oc_Datas.Add(new Oc_data() { one = 1, two = "1", three = "1" });
+            }
+            //移除指定索引项
+            oc_Datas.Remove(oc_Datas[oc_Datas.Count-1]);
+            oc_Datas.Insert(oc_Datas.Count, new Oc_data() { one = 3, two = "3", three = "3" });
+            foreach (var item in oc_Datas)
+            {
+                Console.Write(item.one +"  "+item.two + "  " + item.three);
+                Console.WriteLine();
+            }
+
+            oc_Datas.CollectionChanged -= Data_CollectionChanged;
+
+            var data = new ObservableCollection<string>();
+            //事件： CollectionChanged 在添加、删除、更改、移动项或整个列表时发生
+            data.CollectionChanged += Data_CollectionChanged;
+            
+            /* 
+             * 
+             * 当集合的数据发生改变时，调用委托绑定的方法
+             * 
+             */
+
+            data.Add("One");
+            data.Add("Two");
+            data.Insert(1, "Three");
+            data.Remove("One");
+            //撤销委托
+            data.CollectionChanged -= Data_CollectionChanged;
+            ReadLine();
+        }
+
+        /// <summary>
+        /// 受委托的方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public static void Data_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            WriteLine($"action: {e.Action.ToString()}");
+
+            if (e.OldItems != null)
+            {
+                WriteLine($"旧项的起始索引: {e.OldStartingIndex}");
+                WriteLine("old item(s):");
+                foreach (var item in e.OldItems)
+                {
+                    WriteLine(item);
+                }
+            }
+            if (e.NewItems != null)
+            {
+                WriteLine($"新项目的起始索引: {e.NewStartingIndex}");
+                WriteLine("new item(s): ");
+                foreach (var item in e.NewItems)
+                {
+                    WriteLine(item);
+                }
+            }
+            WriteLine();
+        }
+    }
+
+
+
+    #endregion
+
+    #region 不变的集合
+    /*
+     * 如果对象可以改变其状态,就很难在多个同时运行的任务中使用。
+     * 但是如果对象不能改变其状态，就很容易在多线程中使用，不能改变的对象称之为不变的对象。不能改变的集合称之为不变的对象
+     * 
+     * 引用nuget 包： system.collection.immutable 
+     * 这个包提供线程安全的集合，并且保证不会更改其内容，
+     * 也称为不可变集合。与字符串一样，执行修改的任何方法都不会更改现有实例，
+     * 而是返回一个新实例。出于效率考虑，
+     * 该实现使用共享机制来确保新创建的实例与前一个实例共享尽可能多的数据，
+     * 同时确保操作具有可预测的时间复杂度。
+     *  
+     *  ImmutableArray<T> 提供了添加元素的Add()方法。但是，与其他集合相反，Add()方法不会改变不变集合本身而是返回一个新的不变集合
+     * 
+     * 
+     * 不变的集合 支持 linq 查询 
+     *  
+     */
+    class data_Immutables
+    {
+        public string Name { get; }
+        public decimal Amount { get; }
+        public data_Immutables(string nae, decimal aunt)
+        {
+            Name = nae;
+            Amount = aunt;
+        }
+    }
+    class Immutables
+    {
+      
+
+        public  static void Immutabless()
+        {
+            //创建一个空数组
+            ImmutableArray<string> ia = ImmutableArray.Create<string>();
+            //由于 ImmutableArray 并不改变自身而是返回一个新的实例，所以 ia 仍然为空
+            //而 ia1 则 是包含一个元素   code 的不变集合（由 add() 返回, 可以连续添加）
+            ImmutableArray<string> ia1 = ia.Add("code").Add("read");
+
+            var data_Immutables1 = new List<data_Immutables>()
+            {
+                new data_Immutables("11111",333333m),
+                new data_Immutables("22222",222222m),
+                new data_Immutables("33333",111111m)
+            };
+            //引用 System.Collections.Immutable; 使用 ToImmutableList 方法创建一个不变的集合（需要 nuget 引用）
+            //转到定义一看他实现了一大串接口。。。由于实现了 IEnumerable 接口，所以他可以向其它集合那样枚举，只是他自身不能改变（自身不该变是不变集合的本质）
+            ImmutableList<data_Immutables> data_s = data_Immutables1.ToImmutableList();
+
+            foreach (var item in data_s)
+            {
+                Console.WriteLine(item.Name +"  "+ item.Amount);
+            }
+            //ImmutableList 自身也定义了foreach 方法（这个方法定义了以个Action<T> 泛型委托作为参数） 可以和 lambda 一起使用 
+            data_s.ForEach(a => WriteLine($"{a.Name} {a.Amount}"));
+            /*
+             
+            由于不变几个最大的卖点就是集合的状态不变，
+            所以 ImmutableList 内类似的其它集合的方法功能都一样，
+            唯一的区别就是 ImmutableList 返回的是一个新的不变集合
+
+            */
+            ImmutableList<data_Immutables>.Builder  data_s1 = data_s.ToBuilder();
+
+            //遍历新集合
+            for (int i = 0; i < data_s1.Count; i++)
+            {
+                data_Immutables a = data_s1[i];
+                if (a.Amount > 0)
+                {
+                    data_s1.Remove(a);
+                }
+            }
+            // ToImmutable 基于此实例的内容创建一个不可变列表。
+            ImmutableList<data_Immutables> overdrawnAccounts = data_s1.ToImmutable();
+
+            overdrawnAccounts.ForEach(a => WriteLine($"{a.Name} {a.Amount}"));
+
+            // ImmutableArray 第一个是一个结构体 ImmutableArray 表示不可变数组;也就是说一旦改变就不能再改变了 创建。NuGet包: System.Collections。不可变(关于不可变集合以及如何安装)
+
+            //ImmutableArray 第二个是一个类 ImmutableArray  提供用于创建不可变数组的方法;这意味着一旦它被创建，就不能被更改。NuGet包:System.Collections。不可变(关于可变集合和如何安装)
+            ImmutableArray<string> arr = ImmutableArray.Create<string>("one", "two", "three", "four", "five");
+            //StartsWith 如果值匹配此字符串的开头，则为真;否则,假的。
+            var result = arr.Where(s => s.StartsWith("t"));
+            Console.WriteLine(result.Count());
+        }
+    }
+
+
+    #endregion
+
+    #region 并发集合
+    /*
+     * 并发集合 ：由于常规的集合都是可以改变的，可以改变就意味这不是线程安全的
+     * 所以这个时候 不变集合就站出来了
+     * 
+     * 在.net  的 System.Collections.Concurrent  中 有几个线程安全的集合类。线程安全的集合可以防止多个线程以冲突的方式访问集合
+     * 
+     * 为了对集合进行线程安全的访问，定义了一个 IProducerConsumerCollection<T> 接口（定义供制造者/使用者用来操作线程安全集合的方法）
+     * 
+     * ConcurrentQueue<T> 泛型集合类 
+     * 1.定义了一种避免锁定的算法实现，使用再内部合并到一个链表中的32 项数组  （ConcurrentQueue 和 immutablequeqe 及其相似 但ConcurrentQueue 是线程安全的）
+     * 2.实现 IProducerConsumerCollection 接口 提供了制造者和使用者来操作线程安全集合的方法
+     * 3.TryAdd() 将一个对象添加到 IProducerConsumerCollection 中
+     * 4.trytake() 从 IProducerConsumerCollection 中移除并返回一个对象
+     * 
+     * 
+     * 
+     * 还有  ConcurrentStack<T> , ConcurrentBag<T>,  ConcurrentDictionary<TKey,TValue>  ,
+     * 
+     * 
+     * BlockingCollection<T> （在提取和添加元素之前，会阻塞线程并一直等待） 为实现 IProducerConsumerCollection<T> 的线程安全集合提供阻塞和限制功能。
+     * 
+     * 以上类都有 Concurrent 他们个作用其实和重名的普通集合是一样的，只不过他们是支持并发的（换句话说就是线程安全的）
+     * 换句话说，就是 ConcurrentXXX 的集合都是线程安全的，如果某个动作不适用于线程的当前状态 就返回false  在继续之前都要确认添加和提取数据是否成功，不要相信集合会完成任务？
+     * 
+     */
+
+
+    #region 创建管道
+
+    /*
+     * 创建啥管道？
+     * 管道 就是程序执行的方式就像管道一样，但这个管道是由多个异步方法组成的，异步方法连接的节点就是刚刚看过的并发集合
+     * 为啥要创建呢？
+     * 作用是什么呢？
+     * 优点呢？
+     * 缺点呢？
+     * 有没有替代方法呢？
+     * 
+     * 
+     * 
+     */
+   /// <summary>
+   /// 数据实体
+   /// </summary>
+    public class Info
+    {
+        public string Word { get; set; }
+        public int Count { get; set; }
+        public string Color { get; set; }
+
+        public override string ToString() => $"{Count} times: {Word}";
+    }
+    /// <summary>
+    /// 输出打印 改变颜色
+    /// </summary>
+    public class ColoredConsole
+    {
+        private static object syncOutput = new object();
+        public static void WriteLine(string message)
+        {
+            //互斥锁 方法实行外后释放
+            lock (syncOutput)
+            {
+                Console.WriteLine(message);
+            }
+        }
+        public static void WriteLine(string message, string color)
+        {
+            lock (syncOutput)
+            {
+                Console.ForegroundColor = (ConsoleColor)Enum.Parse(
+                    typeof(ConsoleColor), color);
+                Console.WriteLine(message);
+                Console.ResetColor();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 启动类
+    /// </summary>
+    class Programs_pipeline
+    {
+        public static void Programs_pipeline_Main()
+        {
+            StartPipelineAsync().Wait();
+            ReadLine();
+        }
+   
+        public static async Task StartPipelineAsync()
+        {
+            //创建并发集合存储线程返回数据
+            var fileNames = new BlockingCollection<string>();
+            
+            var lines = new BlockingCollection<string>();
+            var words = new ConcurrentDictionary<string, int>();
+            var items = new BlockingCollection<Info>();
+            var coloredItems = new BlockingCollection<Info>();
+
+            //开启线程 执行异步方法
+            Task t1 = PipelineStages.ReadFilenamesAsync(@"../..", fileNames);
+            ColoredConsole.WriteLine("started stage 1");
+            //开启线程执行异步反方法
+            Task t2 = PipelineStages.LoadContentAsync(fileNames, lines);
+            ColoredConsole.WriteLine("started stage 2");
+            Task t3 = PipelineStages.ProcessContentAsync(lines, words);
+            await Task.WhenAll(t1, t2, t3);
+            ColoredConsole.WriteLine("stages 1, 2, 3 completed");
+            Task t4 = PipelineStages.TransferContentAsync(words, items);
+            Task t5 = PipelineStages.AddColorAsync(items, coloredItems);
+            Task t6 = PipelineStages.ShowContentAsync(coloredItems);
+            ColoredConsole.WriteLine("stages 4, 5, 6 started");
+
+            await Task.WhenAll(t4, t5, t6);
+            ColoredConsole.WriteLine("all stages finished");
+        }
+
+    }
+
+    /// <summary>
+    /// 管道节点
+    /// </summary>
+    public static class PipelineStages
+    {
+
+        /// <summary>
+        /// 异步读取文件名
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public static Task ReadFilenamesAsync(string path, BlockingCollection<string> output)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                /*
+                 * Directory 公开用于通过目录和子目录进行创建、移动和枚举的静态方法。
+                 * EnumerateFiles 返回指定路径中与搜索模式匹配的文件名称的可枚举集合，还可以搜索子目录。
+                 * 
+                 * 
+                 */
+                foreach (string filename in Directory.EnumerateFiles(path, "*.cs",
+                    SearchOption.AllDirectories))
+                {
+                    output.Add(filename);
+                    ColoredConsole.WriteLine($"stage 1: added {filename}");
+                }
+                // CompleteAdding 实例标记为不再接受任何添加。
+
+                output.CompleteAdding();
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        /// <summary>
+        /// 异步读取文件名并加载内容，再写入下一队列中
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public static async Task LoadContentAsync(BlockingCollection<string> input, BlockingCollection<string> output)
+        {
+
+            /*
+             * 读取文件并将内容添加到另一个集合中
+             * 该方法使用了输入集合传递的文件名，打开文件，并将文件内容输出到集合
+             * 然后再迭代各项
+             * 
+             */
+            //GetConsumingEnumerable 为集合中的项提供一个使用 IEnumerator<T>。
+            //IEnumerator 好像是一个枚举接口（迭代器）
+            foreach (var filename in input/*如果只使用input 只会迭代当前状态的集合*/.GetConsumingEnumerable())
+            {
+               
+                //创建一个事务 打开指定文件
+                using (FileStream stream = File.OpenRead(filename))
+                {
+                    //读取流 文件
+                    var reader = new StreamReader(stream);
+                    string line = null;
+                    //从当前流中异步读取一行字符并将数据作为字符串返回。
+                    while ((line = await reader.ReadLineAsync()) != null)
+                    {
+                        output.Add(line);
+                        ColoredConsole.WriteLine($"stage 2: added {line}");
+                        await Task.Delay(20);
+                    }
+                }
+            }
+            output.CompleteAdding();
+        }
+        /// <summary>
+        /// 获取输入集合行并拆分，并将每个词筛选到字典中
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public static Task ProcessContentAsync(BlockingCollection<string> input, ConcurrentDictionary<string, int> output)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                foreach (var line in input.GetConsumingEnumerable())
+                {
+                    string[] words = line.Split(' ', ';', '\t', '{', '}', '(', ')',
+                        ':', ',', '"');
+                    foreach (var word in words.Where(w => !string.IsNullOrEmpty(w)))
+                    {
+                        //AddOrUpdate 如果该键不存在，则将键/值对添加到 ConcurrentDictionary<TKey, TValue> 中；
+                        //如果该键已经存在，则更新 ConcurrentDictionary<TKey, TValue> 中的键/值对。
+                        /*
+                         * 如果键没有添加到字典中，第二个参数就定义应该设置的值，如果已存在于字典中，
+                         * updateValueFactory 参数就定义值的改变方式，加一。
+                         */
+
+
+                        output.AddOrUpdate(key: word, addValue: 1, updateValueFactory: (s, i) => ++i);
+                        ColoredConsole.WriteLine($"stage 3: added {word}");
+                    }
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+        /// <summary>
+        /// 从字典中获取数据转换成 info 类型并放到 BlockingCollection
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public static Task TransferContentAsync(ConcurrentDictionary<string, int> input, BlockingCollection<Info> output)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                foreach (var word in input.Keys)
+                {
+                    int value;
+                    //TryGetValue 尝试从 System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue> 获取与指定的键关联的值。
+
+                    if (input.TryGetValue(word, out value))
+                    {
+                        var info = new Info { Word = word, Count = value };
+                        output.Add(info);
+                        ColoredConsole.WriteLine($"stage 4: added {info}");
+                    }
+                }
+                output.CompleteAdding();
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        public static Task AddColorAsync(BlockingCollection<Info> input, BlockingCollection<Info> output)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                foreach (var item in input.GetConsumingEnumerable())
+                {
+                    if (item.Count > 40)
+                    {
+                        item.Color = "Red";
+                    }
+                    else if (item.Count > 20)
+                    {
+                        item.Color = "Yellow";
+                    }
+                    else
+                    {
+                        item.Color = "Green";
+                    }
+                    output.Add(item);
+                    ColoredConsole.WriteLine($"stage 5: added color {item.Color} to {item}");
+                }
+                output.CompleteAdding();
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        public static Task ShowContentAsync(BlockingCollection<Info> input)
+        {
+            return Task.Factory.StartNew(() =>
+            {
+                foreach (var item in input.GetConsumingEnumerable())
+                {
+                    ColoredConsole.WriteLine($"stage 6: {item}", item.Color);
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+    }
+
+    #endregion
+    #endregion
+
+
+
     #region 启动类
     class Program
     {
         static void Main(string[] args)
         {
+
+            #region 管道
+            Programs_pipeline.Programs_pipeline_Main();
+            #endregion
+
+
+            #region 不变集合类型和接口
+            /*
+             * 不变集合类型
+             * 
+             * 以不变集合为基础扩展了 集合存储方式类似于其它可变集合的 不变集合 例如 array list quque stack dictionary 等
+             * 
+             * immutablearray 一个数组类型的不变集合，
+             * immutable
+             * immutablelist   不变列表集合
+             * immutablequeqe 不变队列
+             * immutablestack 不变栈
+             * immutabledictionary 不变字典
+             * 
+             * immutablesortedictionary 不变无序集合
+             * immutablesortedset   不变有序集合
+             * 
+             * 
+             */
+            #endregion
+
+            #region 不变的集合
+
+            //Immutables.Immutabless();
+
+            #endregion
+
+            #region ObservableCollection
+
+            // ObservableCollections.ObservableCollection_main();
+
+            #endregion
+
+            #region BitVector32
+
+            //BitVector32s.BitVector32s_main();
+
+            #endregion
+
+            #region BitArray 点阵列
+
+            // BitArrays.BitArrays_main();
+
+            #endregion
+
+            /*》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》》*/
 
             #region List
             ///List_test.listTest(); //List
@@ -1129,63 +1845,64 @@ namespace 集合
             #endregion
 
             #region 集
+            /*
+                        //HashSet  不重复元素 的无序集合
 
-            //HashSet  不重复元素 的无序集合
+                        var ct = new HashSet<string>(){"1","2","3" };
 
-            var ct = new HashSet<string>(){"1","2","3" };
+                        var tt = new HashSet<string>() { "1", "2" };
 
-            var tt = new HashSet<string>() { "1", "2" };
+                        var pt = new HashSet<string>() { "one","two","three"};
 
-            var pt = new HashSet<string>() { "one","two","three"};
+                        if (pt.Add("4"))
+                        {
+                            Console.WriteLine("4 add");
+                        }
+                        if (!ct.Add("2"))
+                        {
+                            //元素不重复的集合。无序列表
+                            Console.WriteLine("已存在数据");
+                        }
+                        //验证 tt 中 是否每个元素都包含在 ct
+                        if (tt.IsSubsetOf(ct))
+                        {
+                            Console.WriteLine("tt 是 ct 自集");
+                        }
+                        //严重 tt 中是否有 ct 没有的额外元素
+                        if (ct.IsSupersetOf(tt))
+                        {
+                            Console.WriteLine("ct 是 tt 超集");
+                        }
 
-            if (pt.Add("4"))
-            {
-                Console.WriteLine("4 add");
-            }
-            if (!ct.Add("2"))
-            {
-                //元素不重复的集合。无序列表
-                Console.WriteLine("已存在数据");
-            }
-            //验证 tt 中 是否每个元素都包含在 ct
-            if (tt.IsSubsetOf(ct))
-            {
-                Console.WriteLine("tt 是 ct 自集");
-            }
-            //严重 tt 中是否有 ct 没有的额外元素
-            if (ct.IsSupersetOf(tt))
-            {
-                Console.WriteLine("ct 是 tt 超集");
-            }
+                        tt.Add("haha");
+                        if (pt.Overlaps(tt))
+                        {
+                            Console.WriteLine("两个集合间，是否有通用元素。（俗称交集）");
+                        }
 
-            tt.Add("haha");
-            if (pt.Overlaps(tt))
-            {
-                Console.WriteLine("两个集合间，是否有通用元素。（俗称交集）");
-            }
+                        //返回不重复的元素的有序列表
+                        var at = new SortedSet<string>(ct);
+                        at.UnionWith(pt);
+                        at.UnionWith(tt);
+                        Console.WriteLine();
 
-            //返回不重复的元素的有序列表
-            var at = new SortedSet<string>(ct);
-            at.UnionWith(pt);
-            at.UnionWith(tt);
-            Console.WriteLine();
+                        Console.WriteLine("输出参数");
 
-            Console.WriteLine("输出参数");
-
-            foreach (var item in at)
-            {
-                Console.WriteLine(item);
-            }
-
+                        foreach (var item in at)
+                        {
+                            Console.WriteLine(item);
+                        }
+            */
 
             #endregion
 
-         
+
 
             ReadLine();
         }
     }
     #endregion
+
 
 
 
