@@ -29,7 +29,7 @@ namespace 集合
      * 
      * 5.字典   一个存储方式 键 值 的数据集合
      * 
-     * 6.集 
+     * 6.集  set 分集内元素不重复的有序集 和 集内元素不重复的无序集
      * 
      * 集合可以根据集合类实现的接口组合为列表，集合和字典
      * 
@@ -65,7 +65,7 @@ namespace 集合
      * 
      * 
      */
-     class List_test
+    class List_test
     {
         public static void listTest()
         {
@@ -1544,7 +1544,6 @@ namespace 集合
                 output.CompleteAdding();
             }, TaskCreationOptions.LongRunning);
         }
-
         public static Task ShowContentAsync(BlockingCollection<Info> input)
         {
             return Task.Factory.StartNew(() =>
@@ -1568,10 +1567,9 @@ namespace 集合
         static void Main(string[] args)
         {
 
-            #region 管道
-            Programs_pipeline.Programs_pipeline_Main();
+            #region 管道 并发集合
+           // Programs_pipeline.Programs_pipeline_Main();
             #endregion
-
 
             #region 不变集合类型和接口
             /*

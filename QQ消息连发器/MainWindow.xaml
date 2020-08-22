@@ -1,0 +1,35 @@
+﻿<Window x:Class="QQ消息连发器.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QQ消息连发器"
+        mc:Ignorable="d"
+        Background="Gray"
+        Closed="Window_Closed"
+        Title="检索窗口" Height="250" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+           
+        </Grid.RowDefinitions>
+
+        <Label Content="请输入目标QQ聊天窗口"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"/>
+
+        <TextBox Grid.Row="1" Height="30" Width="150" Name="TbWindows"/>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Click="Bthelp_Click" Name="Bthelp" Width="50" Height="30" Content="帮助"/>
+            <Button Click="Btquit_Click" Grid.Column="1" Name="Btquit" Width="50" Height="30" Content="确定"/>
+        </Grid>
+        
+    </Grid>
+</Window>
