@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="Gray"
         Loaded="Window_Loaded"
-        Title="信息发生" Height="400" Width="500">
+        Title="信息发送" Height="400" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -21,7 +21,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Label Content="发送次数" FontSize="15" VerticalAlignment="Center"/>
             <TextBox Width="70" Height="30" Margin="10,0,0,0" Name="TbSenderNum"/>
-            <Label FontSize="15" VerticalAlignment="Center" Content="发送间隔事件（毫秒）" Margin="10,0,0,0"/>
+            <Label FontSize="15" VerticalAlignment="Center" Content="发送间隔时间（毫秒）" Margin="10,0,0,0"/>
             <TextBox Width="70" Height="30" Margin="10,0,0,0" Name="TbInterval"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3">

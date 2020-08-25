@@ -131,7 +131,8 @@ namespace QQ消息连发器
                         ShowWindow(checkH, 1);
                         for (int i = 0; i < Convert.ToInt32(TbSenderNum.Text); i++)
                         {
-                            SendKeys.SendWait(Tbcon.Text + i);//发送
+                            //+ " 发送次数： " +i
+                            SendKeys.SendWait(Tbcon.Text);//发送
                             SendKeys.SendWait("{ENTER}");//回车
                             System.Threading.Thread.Sleep(Convert.ToInt32(TbInterval.Text));
                         }

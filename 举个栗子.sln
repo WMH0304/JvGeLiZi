@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "字符串加密", "字符�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "字符串", "字符串\字符串.csproj", "{030F6D00-A074-4CA5-954C-C392DC66B830}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq一对多", "Linq一对多\Linq一对多.csproj", "{46C73866-4033-48DB-A84F-13C2BAE2D492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq", "Linq一对多\Linq.csproj", "{46C73866-4033-48DB-A84F-13C2BAE2D492}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentScheduler框架体验", "FluentScheduler框架体验\FluentScheduler框架体验.csproj", "{10B137DD-84C6-4FAE-9EFC-DA907360E891}"
 EndProject
@@ -93,6 +93,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQ消息连发器_WPF", "QQ消息连发器\QQ消息连发器_WPF.csproj", "{480363BA-B2EB-406A-89C6-5D116BB0EA95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQ消息连发器_WF", "QQMessageSender\QQMessageSend\QQ消息连发器_WF.csproj", "{26010927-743E-4E4F-A9C8-68367FAE72BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IQueryable", "IQueryable\IQueryable.csproj", "{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -620,6 +622,18 @@ Global
 		{26010927-743E-4E4F-A9C8-68367FAE72BD}.Release|x64.Build.0 = Release|Any CPU
 		{26010927-743E-4E4F-A9C8-68367FAE72BD}.Release|x86.ActiveCfg = Release|Any CPU
 		{26010927-743E-4E4F-A9C8-68367FAE72BD}.Release|x86.Build.0 = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Debug|x86.Build.0 = Debug|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|x64.Build.0 = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|x86.ActiveCfg = Release|Any CPU
+		{3E122829-0E84-4CD1-89BB-DB8B5D71D28F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
