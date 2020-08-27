@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
-
+/*
+ * AssemblyFileVersion 指定文件版本。
+ * 
+ * AssemblyTitle 程序集标题。 
+ * 
+ */
+[assembly :AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyTitle("打野")]
 namespace _17.反射_特性和动态编程
 
 
-/*
+/**
  *说明书上说这一章主要将了8个知识点
  * 
  * 1.访问元数据
@@ -32,6 +39,8 @@ namespace _17.反射_特性和动态编程
        [Obfuscation]
      public string te { set; get; }
     }
+
+    #region 启动类
     class Program
     {
 
@@ -51,20 +60,35 @@ namespace _17.反射_特性和动态编程
          * 
          */
         #endregion
+
         /*
          * 什么是反射呢？
+         * 
          * 1.反射是指对程序集中的元数据进行检查的过程
+         * 
          * 2.反射是指在程序运行时可以动态地创建对象用于访问其他对象地类型
+         * 
          * 3.反射类似于接口，在引用对象中都没有实体
-         * 4.一般来说在程序中要用到某个类地话，需要知道这个类所在地命名空间（可以理解为绝对路径），然而如果用到反射只需要知道对象类就能直接调用（相对路径）
+         * 
+         * 4.一般来说在程序中要用到某个类地话，需要知道这个类所在地命名空间（可以理解为绝对路径），
+         * 然而如果用到反射只需要知道对象类就能直接调用（相对路径）
+         *
          * 5.这个是一种动态调用的体现，结合本章的要讲的内容可知
+         * 
          * 6.包括特性也是一种动态机制，不过貌似特性这玩意好像不需要通过编译
          * 更多的是对某一个对象的说明
          * 
          * 
          * 原理是什么？
-         * 基于编译时通过成员名称（元数据（元数据被定义为：描述数据的数据，对数据及信息资源的描述性信息。））调用成员，进而在执行时实现动态绑定
+         * 
+         * 通俗的说就是 对 对象所支持的 方法 属性 接口 的遍历，选取并调用。
+         * 
+         * 基于编译时通过成员名称（元数据（元数据被定义为：描述数据的数据，对数据及信息资源的描述性信息。））
+         * 调用成员，进而在执行时实现动态绑定
          * 可以在执行时调用未知目标。
+         * 
+         * 
+         * 
          * 和映射有什么关系？
          * 
          * 为什么要用到他？
@@ -72,7 +96,17 @@ namespace _17.反射_特性和动态编程
          * 因为反射他的原理类似于在一大堆东西里面查询出你想要的那个然后将他的每个成员都反射到对象上
          * 
          * 有什么优缺点？
+         * 优点：
+         * 1. 反射提高了程序的灵活性和扩展性
+         * 2. 降低耦合性，提高自适应能力
+         * 3. 他允许程序创建和控制任何类的对象，，无需提前应变嘛目标类 （动态特点）
          * 
+         * 缺点：
+         * 1.性能问题： 使用反射基本上是一种解释操作，用于字段和方法接入是要远慢于直接代码（原因：调用方法或属性未知，需要遍历对象）
+         * 因此反射机制主要用于应用在对灵活性和拓展性要求很高的系统框架上，普通程序不建议使用。
+         * 
+         * 2.使用反射会模糊程序内部逻辑；程序员希望在源代码中看到程序的逻辑，反射却绕过了源代码的技术，
+         * 因而会带来维护的问题，反射代码比相应的直接代码更复杂
          * 
          * 有没有类似的可以代替的呢？
          * 
@@ -81,15 +115,17 @@ namespace _17.反射_特性和动态编程
         #endregion
         static void Main(string[] args)
         {
-            //_Gettype();
+           // _Gettype();
             // _typeof();
-            // 泛型反射();
-            //泛型类型反射();
+             //泛型反射();
+            泛型类型反射();
             //  _nameof();
-            特性_1();
-
+            // 特性_1();
+            Console.ReadLine();
         }
 
+
+        #region 反射
         public static void _Gettype()
         {   //反射 datetime 数据类型
             DateTime dateTime = new DateTime(); //实例对象
@@ -105,8 +141,13 @@ namespace _17.反射_特性和动态编程
              *  
              *  GetProperties  返回当前 Type 的所有公共属性。
              */
-            foreach (System.Reflection.PropertyInfo property   in type.GetProperties())
+             //System.Reflection.MemberInfo property in type.GetMethods()
+            foreach (System.Reflection.PropertyInfo property in type.GetProperties())
             {
+                /*
+                 * System.Reflection.MemberInfo property in type.GetMethods()
+                 * 反射 type 对象的方法
+                 */
                 Console.WriteLine(property.Name);
             }
         }
@@ -115,6 +156,7 @@ namespace _17.反射_特性和动态编程
         public void SampleMethod() { }
         public static void _typeof()
         {
+            //动态获取对象类型
             Type t = typeof(Program);//装箱操作
             // Alternatively, you could use
             // Program obj = new Program();
@@ -125,21 +167,20 @@ namespace _17.反射_特性和动态编程
              *  
              *  GetMethods  获取对象方法 返回当前 Type 的所有公共方法。
              *  
-             *  GetMembers 获取当前 Type 的成员（包括属性、方法、字段、事件等）。
-
+             *  GetMembers 获取当前 Type 的成员（包括属性、方法、字段、事件等。
              */
             MethodInfo[] methodInfo = t.GetMethods();
             /**/
             foreach (MethodInfo mInfo in methodInfo)
                 Console.WriteLine(mInfo.ToString());
             Console.WriteLine("Members:");
+            ///元数据 创建一个存储元数据的数组
             MemberInfo[] memberInfo = t.GetMembers();
             foreach (MemberInfo mInfo in memberInfo)
                 Console.WriteLine(mInfo.ToString());
         }
 
-
-       public static void 泛型反射()
+        public static void 泛型反射()
         {
             Type type = typeof(System.Nullable<>);//反射泛型类
 
@@ -155,19 +196,24 @@ namespace _17.反射_特性和动态编程
             // GetGenericArguments 返回一个系统数组。表示的类型参数的类型对象一个封闭的泛型类型或泛型类型定义的类型参数。
             foreach (Type item in type.GetGenericArguments())
             {
-                Console.WriteLine(type.IsNested); //FullName 获取类型的完全限定名，包括其命名空间，但不包括其组装。
+                Console.WriteLine(type.FullName); //FullName 获取类型的完全限定名，包括其命名空间，但不包括其组装。
             }
 
 
 
         }
+
+      
+
+        #endregion
+
         public static void 特性初探_1()
         {
             //报错原因：原方法有声明了一个不可使用的特性。
-           //string str = texing.LegacyReverseString("dsojkfn");
+            //string str = texing.LegacyReverseString("dsojkfn");
 
         }
-         static void 特性_1()
+        static void 特性_1()
         {
             特性_2(typeof(OldClass));
             Console.WriteLine("=============");
@@ -176,11 +222,11 @@ namespace _17.反射_特性和动态编程
 
 
         }
-            
-        public static void 特性_2( Type type)
+
+        public static void 特性_2(Type type)
         {
-            Author_Attribute author_Attribute = (Author_Attribute)Attribute.GetCustomAttribute(type,typeof(Author_Attribute));
-            if (author_Attribute ==null)
+            Author_Attribute author_Attribute = (Author_Attribute)Attribute.GetCustomAttribute(type, typeof(Author_Attribute));
+            if (author_Attribute == null)
             {
                 Console.WriteLine(type.ToString() + "类中自定义特性不存在！");
             }
@@ -199,7 +245,7 @@ namespace _17.反射_特性和动态编程
          * 2.相比于支持字面量字符串，ide 工具可以更好的支持nameof 操作符
          * 
          */
-         static void _nameof()
+        static void _nameof()
         {
             test test = new test();
 
@@ -213,7 +259,7 @@ namespace _17.反射_特性和动态编程
 
         #endregion
 
-   
+
 
     }
 
@@ -227,14 +273,15 @@ namespace _17.反射_特性和动态编程
      * 2.可以使用特性来修饰类，接口，结构，枚举，委托，事件
      * 3.是一个特殊的类，因为他继承与 attribute类（抽象类，在反射的命名空间下）
      * 4.如果说反射只是把对象的类型映射到目标对象上的话，那么特性就是将一组特定的关系绑定到目标对象上面
-     * 
+     * 5.特性存在于 反射类的下面
      * 他和反射有什么联系？
      * 1.一个是开空头支票，啥都没有
      * 2.一个是口头承诺，有关系。
      * 
      * 他的本质是什么？
      * 将额外数据关联到属性（以及其他构造）的一种方式
-     *  官方解释：特性是给指定的某一声明的一则附加的声明性信息。 允许类似关键字的描述声明。它对程序中的元素进行标注，如类型、字段、方法、属性等。
+     *  官方解释：特性是给指定的某一声明的一则附加的声明性信息。 
+     *  允许类似关键字的描述声明。它对程序中的元素进行标注，如类型、字段、方法、属性等。
      *  
      * 他适用于什么场景？
      *  1.不依赖于选项名称与属性名称的完全匹配
@@ -263,7 +310,7 @@ namespace _17.反射_特性和动态编程
         /// <param name="str"></param>
         /// <returns></returns>
         [Obsolete("this legacy method should not be used", true)]
-        
+
         public static string LegacyReverseString(string str)
         {
             Console.WriteLine("call legacyReverseString");
@@ -278,7 +325,7 @@ namespace _17.反射_特性和动态编程
      * 
      * AllowMultiple =true   声明特性是否可以多次使用， true 为允许多次使用。
      */
-    [System.AttributeUsage(System.AttributeTargets.Class | AttributeTargets.Struct,AllowMultiple =true,Inherited =false)]
+    [System.AttributeUsage(System.AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true, Inherited = false)]
     public class Author_Attribute : Attribute
     {
         private string discretion;
@@ -323,4 +370,6 @@ namespace _17.反射_特性和动态编程
 
 
     #endregion
+    #endregion
+
 }
