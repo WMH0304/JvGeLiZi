@@ -100,7 +100,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "反射_进阶版", "反射_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "特性_终极版", "特性_终极版\特性_终极版.csproj", "{046D27D6-9DB4-468D-B512-B6957278A8D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "动态编程", "动态编程\动态编程.csproj", "{DBFB0392-257C-4463-95A0-30DE42D3A37D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "动态编程", "动态编程\动态编程.csproj", "{DBFB0392-257C-4463-95A0-30DE42D3A37D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{96A3D671-37CE-42F3-8D80-5D22C8FD80A5}"
+	ProjectSection(SolutionItems) = preProject
+		PiCalculator+InternalPiDigitCalculator.cs = PiCalculator+InternalPiDigitCalculator.cs
+		PiCalculator.cs = PiCalculator.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
