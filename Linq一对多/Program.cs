@@ -146,11 +146,6 @@ namespace Linq一对多
              */
             #endregion
 
-
-
-
-
-
             /****************************************************/
             Console.ReadKey();
         }
@@ -159,11 +154,8 @@ namespace Linq一对多
             //数据添加，并枚举出来
             IEnumerable<Patent> patents = PatentData.Patents;
             Print(patents);
-
             IEnumerable<Inventor> inventors = PatentData.Inventors;
             Print(inventors);
-
-
         }
         private static void Print<T>(IEnumerable<T> ts)
         {
@@ -185,7 +177,6 @@ namespace Linq一对多
                 new Inventor(){ID =4,Name ="fire"}
 
             };
-
             /// <summary>
             /// 数据添加
             /// </summary>
@@ -196,13 +187,9 @@ namespace Linq一对多
             new Patent(){Title ="3333",Contents="3333"},
             new Patent(){Title ="4444",Contents="4444"},
             };
-
         }
-        
-
     }
     #endregion
-
     #region Select 和 where 的区别
     /*
      * 解释这两个方法前我们可以先将集合想象成一个数据表
@@ -217,14 +204,6 @@ namespace Linq一对多
      *  
      *  或者说是减少数据表中 项的数量
      */
-
-
-
     #endregion
-
-    #region 推迟执行
-
-    #endregion
-
 }
 

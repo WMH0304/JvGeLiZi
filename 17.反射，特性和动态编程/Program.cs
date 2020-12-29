@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace _17.反射_特性和动态编程
 
 
-/**
+/**。。。
  *说明书上说这一章主要将了8个知识点
  * 
  * 1.访问元数据

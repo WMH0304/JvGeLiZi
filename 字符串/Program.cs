@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 
 namespace 字符串
 {
@@ -12,6 +13,7 @@ namespace 字符串
             // Console.WriteLine(str.Substring(str.Length-3,3));//.Split(str.Length - 4)
             string s = "1,2,3,4,5";
             string[] p = s.Split(',');
+            str.Reverse();
             foreach (var item in p)
             {
                 Console.WriteLine(item);

@@ -52,7 +52,7 @@ namespace QQ消息连发器
         {
 
             Tbcon.Text = "Hello World!";
-            TbSenderNum.Text = "10";
+            TbSenderNum.Text = "1000";
             TbInterval.Text = "10";
 
             try

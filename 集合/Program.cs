@@ -90,6 +90,9 @@ namespace 集合
         public static void listTest()
         {
             List<int> vs = new List<int>();
+            //int* i;
+
+          
             //添加元素
             vs.Add(1);
             vs.Add(2);

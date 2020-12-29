@@ -11,7 +11,7 @@ using System.Runtime.ExceptionServices;
 
 namespace 多线程
 {
-    /**基础术语
+    /*基础术语
      * 
      * 
      * 1.CPU（中央处理器/内核）： 是实际执行给定程序的硬件单元
