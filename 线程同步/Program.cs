@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -66,7 +65,7 @@ namespace 线程同步
      * 局部变量加载到栈上，每个线程都有自己的逻辑栈
      * 针对每个方法的调用，局部变量都有自己的实例，不同分方法调用之间，局部变量是不共享的
      * 所以 局部变量在线程之间也是不共享的
-     * 有趣的是 局部变量在c#的层级上是局部变量，而在 IL的层级上是字段，而字段是可以多个线程访问的。
+     * 有趣的是 局部变量在c#的层级上是局部变量，而在 IL 的层级上是字段，而字段是可以多个线程访问的。
      * 
      * Monitor 实现步
      * 为什么要用到Monitor？
@@ -350,20 +349,20 @@ namespace 线程同步
             }
         }
     }
-        #endregion
+    #endregion
 
 
 
-        #endregion
+    #endregion
 
 
 
 
 
-        #region 启动类
+    #region 启动类
 
 
-        class Program
+    class Program
     {
         //默认初始状态为 false
         static ManualResetEventSlim MainSignaledResetEvent;
@@ -634,9 +633,9 @@ namespace 线程同步
                 mres2.Set();
             });
 
-// MRES的常见用法。WaitHandle是使用MRES作为参与者
-// WaitHandle.WaitAll / WaitAny。注意访问MRES。WaitHandle将
-//导致基本的ManualResetEvent的无条件膨胀。
+            // MRES的常见用法。WaitHandle是使用MRES作为参与者
+            // WaitHandle.WaitAll / WaitAny。注意访问MRES。WaitHandle将
+            //导致基本的ManualResetEvent的无条件膨胀。
             WaitHandle.WaitAll(new WaitHandle[] { mres1.WaitHandle, mres2.WaitHandle });
             Console.WriteLine("WaitHandle.WaitAll (mres1。WaitHandle mres2.WaitHandle)完成。");
 
@@ -676,7 +675,7 @@ namespace 线程同步
                 // Count--;
                 _Cs--;
             }
-            Console.WriteLine("DT"+Count);
+            Console.WriteLine("DT" + Count);
         }
 
         #endregion
@@ -712,7 +711,7 @@ namespace 线程同步
             }
         }
 
- 
+
 
 
 
