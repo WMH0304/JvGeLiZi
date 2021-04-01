@@ -7,8 +7,8 @@ using System.Collections.Generic;
  * AssemblyTitle 程序集标题。 
  * 
  */
-[assembly :AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyTitle("打野")]
+//[assembly :AssemblyFileVersion("1.0.0.0")]
+//[assembly: AssemblyTitle("打野")]
 namespace _17.反射_特性和动态编程
 
 

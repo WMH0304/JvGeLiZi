@@ -14,6 +14,11 @@ namespace 字符串
             string s = "1,2,3,4,5";
             string[] p = s.Split(',');
             str.Reverse();
+
+            if (s.Contains("2") && !s.Contains("3"))
+            {
+
+            }
             foreach (var item in p)
             {
                 Console.WriteLine(item);

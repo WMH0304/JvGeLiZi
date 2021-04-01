@@ -17,7 +17,8 @@ namespace async_await
         {
             claAsync();
             Console.WriteLine("Hello World!");
-            
+            Console.ReadKey();
+
         }
 
         public static int t()
@@ -36,6 +37,7 @@ namespace async_await
             int b = await Task.Run(() => t());
             Console.WriteLine(b);
             Console.WriteLine(a);
+         
 
         }
 

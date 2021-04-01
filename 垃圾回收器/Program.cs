@@ -42,7 +42,10 @@ namespace 垃圾回收器
             GC.Collect(0);
             //挂起当前线程，直到正在处理的队列的线程终结器清空了队列。
             GC.WaitForPendingFinalizers();
-
+           // Random r = new Random();
+           // int[] i = new[] { 1,3,4,5,6,8};
+            //r.NextBytes(Convert.ToByte(i[0]),Convert.ToByte(i[3]));
+           // r.Next(5,10);
             Console.ReadLine();
         }
     }
