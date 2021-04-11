@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WPFUI_test": {
+      "commandName": "Project",
+      "commandLineArgs": "Testss.txt"
+    }
+  }
+}
