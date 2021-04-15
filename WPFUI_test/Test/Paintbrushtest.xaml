@@ -1,0 +1,82 @@
+﻿<Window x:Class="WPFUI_test.Test.Paintbrushtest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFUI_test.Test"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Title="Paintbrushtest" Height="450" Width="800">
+    <StackPanel>
+        <Button x:Name="btn" Width="100" Height="100" Content="safsda" >
+            <Button.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="Red" Offset="0"/>
+                    <GradientStop Color="Blue"  Offset="0.5"/>
+                    <GradientStop Color="Red" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+            <Rectangle Width="100" Height="100" Margin="10">
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Blue"  Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle  Width="100" Height="100" Margin="10" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Blue"  Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Rectangle  Width="100" Height="100" Margin="10" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="0.5"/>
+                        <GradientStop Color="Blue"  Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Text="woaerneoanemf;anef;alefnf;alskdnf" VerticalAlignment="Center">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="0.5"/>
+                        <GradientStop Color="Blue"  Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="10" >
+                <Rectangle Width="100" Height="100" Margin="10">
+                    <Rectangle.Fill>
+                        <RadialGradientBrush  GradientOrigin=".1,.8">
+                            <GradientStop Color="Red" Offset="0"/>
+                            <GradientStop Color="Blue" Offset="0.5"/>
+                            <GradientStop Color="Red" Offset="0.75"/>
+                            <GradientStop Color="Blue" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle Width="100" Height="100" Margin="10">
+
+                </Rectangle>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Height="200">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Test/TestPath.jpg" Stretch="UniformToFill" TileMode="FlipXY" 
+                            ViewportUnits="RelativeToBoundingBox" Viewport="0,0 .25,.25"></ImageBrush>
+            </StackPanel.Background>
+        </StackPanel>
+        
+        
+    </StackPanel>
+</Window>

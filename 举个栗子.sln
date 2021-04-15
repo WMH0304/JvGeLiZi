@@ -87,6 +87,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "集合", "集合\集合.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "image", "image", "{46FEC2C3-ED09-414F-B60C-17DC51F9051C}"
 	ProjectSection(SolutionItems) = preProject
+		C:\Users\TK\Desktop\TestPath.jpg = C:\Users\TK\Desktop\TestPath.jpg
 		C:\Users\TK\Desktop\各集合的各操作时间复杂的度.PNG = C:\Users\TK\Desktop\各集合的各操作时间复杂的度.PNG
 	EndProjectSection
 EndProject
@@ -126,7 +127,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lambda进阶", "lambda进�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queryable_集合进阶", "Queryable_集合进阶\Queryable_集合进阶.csproj", "{72CC18A6-C68C-4CF4-9EE3-7437BF097A3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFUI_test", "WPFUI_test\WPFUI_test.csproj", "{80318D00-514C-4A2A-843D-6133C1C3B42C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI_test", "WPFUI_test\WPFUI_test.csproj", "{80318D00-514C-4A2A-843D-6133C1C3B42C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf_behavior_Library", "Wpf_behavior_Library1\Wpf_behavior_Library.csproj", "{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{D6CCED1D-713D-4652-AF07-46D15D1BE891}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -822,6 +827,30 @@ Global
 		{80318D00-514C-4A2A-843D-6133C1C3B42C}.Release|x64.Build.0 = Release|Any CPU
 		{80318D00-514C-4A2A-843D-6133C1C3B42C}.Release|x86.ActiveCfg = Release|Any CPU
 		{80318D00-514C-4A2A-843D-6133C1C3B42C}.Release|x86.Build.0 = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|x64.Build.0 = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Debug|x86.Build.0 = Debug|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|x64.ActiveCfg = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|x64.Build.0 = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}.Release|x86.Build.0 = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|x64.Build.0 = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Debug|x86.Build.0 = Debug|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x64.ActiveCfg = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x64.Build.0 = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x86.ActiveCfg = Release|Any CPU
+		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

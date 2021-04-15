@@ -2,16 +2,35 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPFUI_test"
-             StartupUri="test\ControlTest.xaml"
+             StartupUri="test\Paintbrushtest.xaml"
              DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             
              Startup="Application_Startup"
            >
-    <Application.Resources>
-        <!--StartupUri="test\canvas_test.xaml"-->
-        <!--
+    <!--StartupUri="test\canvas_test.xaml"-->
+    <!--
+    Paintbrushtest
         mouseposition
+    Shapetest
         ControlTest
+        ControlTest
+        Resourcetest
+    Behaviorst
+    Resourcetest
+    StyleTest
+    Behaviors
         -->
+    <Application.Resources>
+
+        <!--<ImageBrush x:Key="TileBrush" TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 40 40" ImageSource="/Test/TestPath.jpg"/>-->
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Style\Dictionarytest1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
     </Application.Resources>
 </Application>
 

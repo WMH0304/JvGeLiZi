@@ -32,16 +32,16 @@ namespace WPFUI_test
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             //ControlTest controlTest = new ControlTest();
-            MainWindow window = new MainWindow();
-            if (e.Args.Length >0)
-            {
-                string str = e.Args[0];
-                if (File.Exists(str))
-                {
-                    window.lodFile(str);
-                }
-            }
-            window.Show();
+            //MainWindow window = new MainWindow();
+            //if (e.Args.Length >0)
+            //{
+            //    string str = e.Args[0];
+            //    if (File.Exists(str))
+            //    {
+            //        window.lodFile(str);
+            //    }
+            //}
+            //window.Show();
         }
     }
 }

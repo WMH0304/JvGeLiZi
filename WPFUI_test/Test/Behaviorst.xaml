@@ -1,0 +1,24 @@
+﻿<Window x:Class="WPFUI_test.Test.Behaviors"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i ="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:local="clr-namespace:WPFUI_test.Test"
+        xmlns:custom="clr-namespace:WpfLibrary;assembly=WpfLibrary"
+        mc:Ignorable="d"
+        Title="Behaviors" Height="450" Width="800">
+    <Canvas x:Name="canvals"  Height="450" Width="800">
+        <Rectangle x:Name="rect" Height="60" Width="100" Fill="Blue" Canvas.Left="132" Canvas.Top="74">
+            <i:Interaction.Behaviors>
+                <custom:Class1></custom:Class1>
+            </i:Interaction.Behaviors>
+        </Rectangle>
+
+        <Ellipse x:Name="ep" Height="50" Width="100" Fill="Yellow" Canvas.Left="336" Canvas.Top="118">
+            <i:Interaction.Behaviors>
+                <custom:Class1></custom:Class1>
+            </i:Interaction.Behaviors>
+        </Ellipse>
+    </Canvas>
+</Window>
