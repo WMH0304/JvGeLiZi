@@ -129,9 +129,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queryable_集合进阶", "Q
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WPFUI_test", "WPFUI_test\WPFUI_test.csproj", "{80318D00-514C-4A2A-843D-6133C1C3B42C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf_behavior_Library", "Wpf_behavior_Library1\Wpf_behavior_Library.csproj", "{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf_behavior_Library", "Wpf_behavior_Library1\Wpf_behavior_Library.csproj", "{B9A6F9B9-4459-47C9-8F7D-29E8034A0932}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{D6CCED1D-713D-4652-AF07-46D15D1BE891}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{D6CCED1D-713D-4652-AF07-46D15D1BE891}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

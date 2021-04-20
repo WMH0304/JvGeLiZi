@@ -1,0 +1,16 @@
+﻿<Window x:Class="WPFUI_test.Test.VisualObject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFUI_test.Tools"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        MouseRightButtonDown="Window_MouseRightButtonDown"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        
+        Title="VisualObject" Height="450" Width="800">
+    <local:VisualTest x:Name="Mytest" >
+        
+    </local:VisualTest>
+</Window>

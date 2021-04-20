@@ -1,0 +1,50 @@
+﻿<Window x:Class="WPFUI_test.Test.EffectTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFUI_test.Test"
+        mc:Ignorable="d"
+        Title="EffectTest" Height="450" Width="800">
+    <StackPanel>
+        <Button Padding="5" Margin="5"  Content="btn123423">
+            <Button.Effect>
+                <BlurEffect Radius="2"/>
+            </Button.Effect>
+        </Button>
+        <Button Padding="5" Margin="5"  Content="btn123423">
+            <Button.Effect>
+                <BlurEffect Radius="3"/>
+            </Button.Effect>
+        </Button>
+
+        <Button Padding="5" Margin="5"  Content="btn123423">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="15" Color="Red" />
+            </Button.Effect>
+        </Button>
+
+        <Label>
+            <Label.Content>seafdasdfasdf</Label.Content>
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="10" Color="Red"/>
+            </Label.Effect>
+        </Label>
+
+        <Label>
+            <Label.Content>seafdasdfasdf</Label.Content>
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="10"  Color="Red"/>
+            </Label.Effect>
+            
+        </Label>
+        
+        <Label>
+            <Label.Content>seafdasdfasdf</Label.Content>
+            <Label.Effect>
+                <DropShadowEffect Direction="45"  ShadowDepth="10"  Color="Red"/>
+            </Label.Effect>
+
+        </Label>
+    </StackPanel>
+</Window>

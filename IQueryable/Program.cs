@@ -58,6 +58,7 @@ namespace IQueryable
             IEnumerable<int> result = FindGreaterThan5(listTest);
             foreach (var i in result)
             {
+                
                 Console.WriteLine(i);
             }
         }

@@ -6,17 +6,9 @@
         xmlns:local="clr-namespace:WPFUI_test.Test"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="Paintbrushtest" Height="450" Width="800">
+        Title="Paintbrushtest" Height="500" Width="800">
     <StackPanel>
-        <Button x:Name="btn" Width="100" Height="100" Content="safsda" >
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="Red" Offset="0"/>
-                    <GradientStop Color="Blue"  Offset="0.5"/>
-                    <GradientStop Color="Red" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
+       
         <StackPanel Orientation="Horizontal">
             <Rectangle Width="100" Height="100" Margin="10">
                 <Rectangle.Fill>
@@ -75,6 +67,28 @@
                 <ImageBrush ImageSource="/Test/TestPath.jpg" Stretch="UniformToFill" TileMode="FlipXY" 
                             ViewportUnits="RelativeToBoundingBox" Viewport="0,0 .25,.25"></ImageBrush>
             </StackPanel.Background>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <Button x:Name="btn" Width="100" Height="100" Content="safsda" >
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Blue"  Offset="0.5"/>
+                        <GradientStop Color="Red" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Button x:Name="btn_1" Height="100" Width="100" Margin="10" Content="sadfsadf"/>
+
+            <Rectangle Height="100" Width="100" >
+                <Rectangle.Fill>
+                    <!--<VisualBrush Visual="{Binding ElementName=btn_1}"/>-->
+                    <BitmapCacheBrush Target="{Binding ElementName=btn_1}" BitmapCache="BitmapCache"></BitmapCacheBrush>
+
+                </Rectangle.Fill>
+            </Rectangle>
+
         </StackPanel>
         
         
