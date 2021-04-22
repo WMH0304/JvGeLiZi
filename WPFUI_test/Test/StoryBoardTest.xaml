@@ -1,0 +1,97 @@
+﻿<Window x:Class="WPFUI_test.Test.StoryBoardTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFUI_test.Test"
+        mc:Ignorable="d"
+        Title="StoryBoardTest" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="Style">
+            <Style.Triggers>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Height" From="100" To="300" Duration="0:0:5" AutoReverse="False" ></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <!--淡化动画 开始动画-->
+        <EventTrigger SourceName="start" RoutedEvent="Button.Click">
+            <BeginStoryboard x:Name="shade">
+                <Storyboard CurrentTimeInvalidated="Storyboard_CurrentTimeInvalidated">
+                    <!-- CurrentTimeInvalidated  在此时钟的当前迭代中获取它的当前时间时发生 -->
+                    <DoubleAnimation Storyboard.TargetName="btn1" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:2"></DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        
+<!--暂停动画-->
+        <EventTrigger SourceName="pause" RoutedEvent="Button.Click">
+            <PauseStoryboard BeginStoryboardName="shade"></PauseStoryboard>
+        </EventTrigger>
+        
+        <!--恢复暂停的动画-->
+        <EventTrigger SourceName="resume" RoutedEvent="Button.Click">
+            <ResumeStoryboard BeginStoryboardName="shade">
+                <!--BeginStoryboardName  指定动画故事板  SourceName 指定控件触发-->
+            </ResumeStoryboard>
+        </EventTrigger>
+
+        <!--停止动画-->
+        <EventTrigger SourceName="stop" RoutedEvent="Button.Click">
+            <StopStoryboard>
+                <StopStoryboard.BeginStoryboardName>shade</StopStoryboard.BeginStoryboardName>
+            </StopStoryboard>
+        </EventTrigger>
+        
+        <!---->
+        
+        
+    </Window.Triggers>
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button x:Name="btn" HorizontalAlignment="Center"  VerticalAlignment="Center" Height="100" Width="100" 
+                Style="{StaticResource Style}">
+            <Button.Triggers><!-- 事件触发器 -->
+                <EventTrigger RoutedEvent="Button.Click"><!-- 定义路由事件类型  -->
+                    <EventTrigger.Actions><!-- 事件集合 -->
+                        <BeginStoryboard><!-- 动画故事板 -->
+                            <Storyboard><!--故事板-->
+                                <DoubleAnimation Storyboard.TargetProperty="Width" FillBehavior="HoldEnd" 
+                                                 From="160" To="300" AutoReverse="False"  Duration="0:0:5"><!--定义动画-->
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Button.Triggers>
+            
+            
+        </Button>
+
+        <Button Grid.Row="1" Name="btn1" Content="test" Width="200" Height="100"  Background="Green"  ></Button>
+        <Button Grid.Row="1" Name="btn2" Content="ssafd" Width="100" Height="100" Background="Red" ></Button>
+        <ProgressBar Grid.Row="1" Name="pg" Height="10" Background="Yellow" Width="400" Minimum="0" Maximum="1"  Margin="-3,109,3,141" Grid.RowSpan="2" RenderTransformOrigin="0.496,1.266" ></ProgressBar>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <Button x:Name="start" Margin="10" Width="70" Height="30" Content="开始动画"></Button>
+            <Button x:Name="pause" Margin="10" Width="70" Height="30" Content="暂停动画"></Button>
+            <Button x:Name="resume" Margin="10" Width="70" Height="30" Content="恢复动画"></Button>
+            <Button x:Name="stop" Margin="10" Width="70" Height="30" Content="停止动画"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

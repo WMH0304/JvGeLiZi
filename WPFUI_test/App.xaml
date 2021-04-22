@@ -2,13 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPFUI_test"
-             StartupUri="test\AnimationTest.xaml"
+             StartupUri="test\StoryBoardTest.xaml"
              DispatcherUnhandledException="Application_DispatcherUnhandledException"
              
              Startup="Application_Startup"
            >
     <!--StartupUri="test\canvas_test.xaml"-->
     <!--
+    StoryBoardTest
     AnimationTest
     WriteableBitmapTest
     Paintbrushtest

@@ -133,6 +133,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wpf_behavior_Library", "Wpf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfLibrary", "WpfLibrary\WpfLibrary.csproj", "{D6CCED1D-713D-4652-AF07-46D15D1BE891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net_页面传值方法", "net_页面传值方法\net_页面传值方法.csproj", "{C07B4DB4-6784-44CD-937D-864A3B93D467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -851,6 +853,18 @@ Global
 		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x64.Build.0 = Release|Any CPU
 		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x86.ActiveCfg = Release|Any CPU
 		{D6CCED1D-713D-4652-AF07-46D15D1BE891}.Release|x86.Build.0 = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|x64.Build.0 = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Debug|x86.Build.0 = Debug|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|x64.ActiveCfg = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|x64.Build.0 = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|x86.ActiveCfg = Release|Any CPU
+		{C07B4DB4-6784-44CD-937D-864A3B93D467}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
