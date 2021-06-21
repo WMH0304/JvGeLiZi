@@ -44,7 +44,7 @@ namespace 事务_Csharp
 
           
             //TransactionScope 事务标示
-            using (TransactionScope transaction = new TransactionScope(new Transaction()) )
+            using (TransactionScope transaction = new TransactionScope() )
             {
                 try
                 {
@@ -64,10 +64,8 @@ namespace 事务_Csharp
                 }
                 catch (Exception)
                 {
-
                     transaction.Dispose();
                 }
-             
             }
 
             var test = tests;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.IO;
 
 namespace 测试题目
 {
@@ -34,26 +32,26 @@ namespace 测试题目
 
         private void ByT(string num)
         {
-            Console.WriteLine("委托"+num);
+            Console.WriteLine("委托" + num);
         }
     }
 
     public class Program//:father
 
-       
+
     {
         private int age;
 
 
 
-       /* 
-       
-        public Program(int age) : base("dd")
-        {
-            this.age = age;
-            Console.WriteLine(age);
-        }
-      */
+        /* 
+
+         public Program(int age) : base("dd")
+         {
+             this.age = age;
+             Console.WriteLine(age);
+         }
+       */
         static void S(int[] t)
         {
             for (int i = 0; i < t.Length; i++)
@@ -97,16 +95,16 @@ namespace 测试题目
 
 
      */
+            /*
+                        Program program = new Program();
+                        Console.WriteLine(program.days -1);
 
-            Program program = new Program();
-            Console.WriteLine(program.days -1);
+                      */
 
-          
-
-           /* Console.WriteLine("创建");
-            Sd st = new Sd("T1");
-            Console.WriteLine("完毕");
-            st.ShowNum("T1");*/
+            /* Console.WriteLine("创建");
+             Sd st = new Sd("T1");
+             Console.WriteLine("完毕");
+             st.ShowNum("T1");*/
 
 
 

@@ -1,0 +1,57 @@
+﻿<Window x:Class="征文要的傻逼表白程序.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:征文要的傻逼表白程序"
+        mc:Ignorable="d"
+        Title="征文要的傻逼表白程序" 
+        WindowState="Minimized" 
+        WindowStyle="ToolWindow"
+        Background="Gray"
+        
+        Height="350" Width="500">
+    <Window.Resources>
+        <Color x:Key="InfoColor1">#5bc0de</Color>
+
+
+        <Style x:Key="mybtn" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="border" BorderBrush="Orange" CornerRadius="5" BorderThickness=".7" >
+                                <TextBlock Text="{TemplateBinding Content}"   HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2f96b4"></Setter>
+                                <Setter  Property="Width" Value="30"/>
+
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2a89a4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+
+
+            </Setter>
+
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="D:\举个栗子\举个栗子\征文要的傻逼表白程序\Image\vg03.jpg"></ImageBrush>
+        </Grid.Background>
+        <Button x:Name="btn1" Width="70"  Style="{StaticResource mybtn}"  Content="同意" Height="30"   Click="btn1_Click" Margin="279,235,151,70"/>
+        <Button x:Name="btn2" Width="70"  Style="{StaticResource mybtn}"  Content="不同意" Height="30"  MouseEnter="btn2_MouseEnter" Margin="83,231,347,74" />
+    </Grid>
+</Window>

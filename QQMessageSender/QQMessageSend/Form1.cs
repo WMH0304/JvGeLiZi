@@ -85,13 +85,13 @@ namespace QQMessageSend
         {
             try
             {
-                if (textBox1.Text == "")
+                if (textBox1.Text == string.Empty)
                 {
                     MessageBox.Show("你发个寂寞");
                 }
                 else
                 {
-                    if (textBox2.Text == "")
+                    if (textBox2.Text == string.Empty)
                     {
                         MessageBox.Show("你这是要发几次");
                     }

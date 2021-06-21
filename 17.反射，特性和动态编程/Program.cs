@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
+using System.Reflection;
 /*
  * AssemblyFileVersion 指定文件版本。
  * 
  * AssemblyTitle 程序集标题。 
  * 
  */
-//[assembly :AssemblyFileVersion("1.0.0.0")]
-//[assembly: AssemblyTitle("打野")]
+[assembly :AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyTitle("Test")]
 namespace _17.反射_特性和动态编程
 
 
@@ -30,14 +30,14 @@ namespace _17.反射_特性和动态编程
  * 
  */
 {
-   public class test
+    public class test
     {
-      public  string str { set; get; }
+        public string str { set; get; }
         public float flo { set; get; }
         public double dou { set; get; }
-       //特性修饰属性
-       [Obfuscation]
-     public string te { set; get; }
+        //特性修饰属性
+        [Obfuscation]
+        public string te { set; get; }
     }
 
     #region 启动类
@@ -115,10 +115,10 @@ namespace _17.反射_特性和动态编程
         #endregion
         static void Main(string[] args)
         {
-           // _Gettype();
+             _Gettype();
             // _typeof();
-             //泛型反射();
-            泛型类型反射();
+            //泛型反射();
+            //泛型类型反射();
             //  _nameof();
             // 特性_1();
             Console.ReadLine();
@@ -141,7 +141,15 @@ namespace _17.反射_特性和动态编程
              *  
              *  GetProperties  返回当前 Type 的所有公共属性。
              */
-             //System.Reflection.MemberInfo property in type.GetMethods()
+            //System.Reflection.MemberInfo property in type.GetMethods()
+            List<MethodInfo> n = new List<MethodInfo>();
+           // Dictionary<string, MethodInfo> mi = new Dictionary<string, MethodInfo>();
+                foreach (var item in type.GetMethods())
+            {
+                n.Add(item);
+              //  mi.Add(item.Name,item);
+                Console.WriteLine(item.Name);
+            }
             foreach (System.Reflection.PropertyInfo property in type.GetProperties())
             {
                 /*
@@ -203,7 +211,7 @@ namespace _17.反射_特性和动态编程
 
         }
 
-      
+
 
         #endregion
 

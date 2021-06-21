@@ -18,6 +18,7 @@ namespace WPFUI_test
         public void showWindow()
         {
             MainWindow window = new MainWindow();
+           
             window.Show();
         }
     }

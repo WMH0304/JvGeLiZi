@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 
 
@@ -78,16 +75,18 @@ namespace 反射_进阶版
      */
 
     #region 泛型类型上的反射
-        /*
-         * CLR 2.0 引入了在泛型类型上反射的能力。
-         * 在泛型类型上执行运行时反射，可判断出类或方法是否包含泛型类型，以及他可能包含的任何类型参数
-         * 
-         * 
-         * 
-         * 
-         */
-         public class Genericity
+    /*
+     * CLR 2.0 引入了在泛型类型上反射的能力。
+     * 在泛型类型上执行运行时反射，可判断出类或方法是否包含泛型类型，以及他可能包含的任何类型参数
+     * 
+     * 
+     * 
+     * 
+     */
+    public class Genericity
     {
+
+    
         public static void Genericity_main()
         {
             Type type;
@@ -99,9 +98,10 @@ namespace 反射_进阶版
             type = typeof(System.Nullable<DateTime>);
             Console.WriteLine(type.ContainsGenericParameters);
             Console.WriteLine(type.IsGenericType);
-
-
         }
+
+        
+
     }
 
     #endregion
@@ -126,7 +126,7 @@ namespace 反射_进阶版
         public string Name { get; set; }
         public int Age { get; set; }
 
-        public NewTextClass(string aa,int bb)
+        public NewTextClass(string aa, int bb)
         {
             a = aa;
             b = bb;
@@ -138,11 +138,11 @@ namespace 反射_进阶版
 
         public void show()
         {
-            Console.WriteLine("一个对象" +a+b+this.Name+this.Age);
+            Console.WriteLine("一个对象" + a + b + this.Name + this.Age);
         }
     }
 
-   public class GetTypes
+    public class GetTypes
     {
 
         public static void GetTypes_Main()
@@ -184,21 +184,21 @@ namespace 反射_进阶版
 
 
         }
-            #region nameof
+        #region nameof
 
-            /*
-             * nameof 用于提供参数异常中的参数名称
-             * 
-             * 从技术上讲 nameof 不是反射 但他可以接收程序集的数据
-             * 为社么不直接使用异常消息提示呢？还要大费周章地指定一个 nameof
-             * 
-             * 使用 nameof 操作符有两个优点
-             * 1.c# 编译器保证了传给nameof 操作符地实参是一个有效地编程标识符，能有效地方式在编程标识符改变时反射错误
-             * 2.相比于支持字面量字符串，ide 能更好地支持 nameof 操作符
-             * 
-             * 
-             */
-             class Nameofs : INotifyPropertyChanged
+        /*
+         * nameof 用于提供参数异常中的参数名称
+         * 
+         * 从技术上讲 nameof 不是反射 但他可以接收程序集的数据
+         * 为社么不直接使用异常消息提示呢？还要大费周章地指定一个 nameof
+         * 
+         * 使用 nameof 操作符有两个优点
+         * 1.c# 编译器保证了传给nameof 操作符地实参是一个有效地编程标识符，能有效地方式在编程标识符改变时反射错误
+         * 2.相比于支持字面量字符串，ide 能更好地支持 nameof 操作符
+         * 
+         * 
+         */
+        class Nameofs : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
             public Nameofs(string name)
@@ -211,7 +211,7 @@ namespace 反射_进阶版
                 get { return _Name; }
                 set
                 {
-                    if (_Name !=value)
+                    if (_Name != value)
                     {
                         _Name = value;
                         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
@@ -221,7 +221,7 @@ namespace 反射_进阶版
         }
         #endregion
 
-    
+
 
 
     }
@@ -238,14 +238,35 @@ namespace 反射_进阶版
     {
         static void Main(string[] args)
         {
-             GetTypes.GetTypes_Main();
+            //GetTypes.GetTypes_Main();
 
             //Genericity.Genericity_main();
+
+            Type type = GetType("反射_进阶版.ReflectionTest");
+
+
 
             /***************/
             Console.ReadLine();
         }
-    }
-    #endregion
 
+        public static Type GetType(string s)
+        {
+            Assembly assembly = Assembly.Load("mscorlib.dll");
+            Type type = assembly.GetType(s, true, false);
+            return type;
+        }
+
+
+        class ReflectionTest
+        {
+            private void Test()
+            {
+                Console.WriteLine("123");
+            }
+        }
+
+
+        #endregion
+    }
 }
