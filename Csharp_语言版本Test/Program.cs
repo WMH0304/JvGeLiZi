@@ -17,7 +17,7 @@ namespace Csharp_语言版本Test
         //}
 
         public static int int_test(int num)
-        {
+        {    
             string s = "asdfasdfsd";
             var bo = false;
           var tt=   s.Substring(num, 1);
