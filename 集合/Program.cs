@@ -91,7 +91,7 @@ namespace 集合
         {
             List<int> vs = new List<int>();
             //int* i;
-
+            ArrayList arrayList = new ArrayList();
           
             //添加元素
             vs.Add(1);

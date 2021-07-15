@@ -21,9 +21,14 @@
             <Image  Width="500" Height="200" Margin="10,20,0,0" x:Name="txm"></Image>
             
         </StackPanel>
-
-        <Button Grid.Row="2" Width="100" x:Name="btn" Click="btn_Click" Content="生成" >
-        </Button>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock Text="想要输入的" VerticalAlignment="Center" FontSize="20"></TextBlock>
+            <TextBox x:Name="tb_content" Width="200" VerticalScrollBarVisibility="Auto"></TextBox>
+            <Button Grid.Row="2" Width="100" x:Name="btn" Click="btn_Click" Content="生成" >
+            </Button>
+           
+        </StackPanel>
+        
 
 
 

@@ -2,6 +2,9 @@
 using System.Data;
 using System.Xml;
 
+
+
+
 namespace XML初探
 {
    static  class Program
@@ -10,6 +13,7 @@ namespace XML初探
         {
             xmlTest();
             Test();
+            
         }
 
         /// <summary>
@@ -27,6 +31,8 @@ namespace XML初探
             XmlNode xmlNode = xml.SelectSingleNode("Test1");
             xmlNode.AppendChild(xmlElement);
             xmlNode.InnerText = "哈哈";
+            
+
             try
             {
                 xml.Save("D:/举个栗子/举个栗子/test.xml");
@@ -36,6 +42,9 @@ namespace XML初探
 
                 throw;
             }
+            
+
+            
         }
 
         /// <summary>

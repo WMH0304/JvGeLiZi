@@ -36,11 +36,23 @@ namespace 测试题目
         }
     }
 
+  public  static class Test
+    {
+        public static bool t;
+        static public int id { get; set; }
+
+        static public int name { get; set; }
+
+        static public string old { get; set; }
+    }
+
+
+
     public class Program//:father
 
 
     {
-        private int age;
+        //private int age;
 
 
 
@@ -73,10 +85,29 @@ namespace 测试题目
             }
         }
 
-        private int days;
+        //private int days;
 
+
+     
         static void Main(string[] args)
         {
+            if (Test.t)
+            {
+                Test.id = 1;
+                Test.name = 2;
+                Test.old = "t =true 的情况";
+                Test.t = false;
+            }
+
+
+            if (!Test.t)
+            {
+                Test.id = 1;
+                Test.name = 2;
+                Test.old = "t =false 的情况";
+                Test.t = true;
+            }
+           
             /* int[] t = new int[] { 1, 2, 3, 4, 5 };
              S(t);
              Console.WriteLine();

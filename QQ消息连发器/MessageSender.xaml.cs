@@ -89,7 +89,7 @@ namespace QQ消息连发器
         /// <param name="e"></param>
         private void Bthelp_Click(object sender, RoutedEventArgs e)
         {
-            
+            MessageBox.Show("你已经是个成熟的小孩了，要学会自己解决问题！");
         }
 
         /// <summary>

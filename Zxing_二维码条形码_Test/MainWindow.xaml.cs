@@ -92,8 +92,6 @@ namespace Zxing_二维码条形码_Test
             IntPtr intPtr = bitmap.GetHbitmap();
             BitmapSource bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(intPtr,IntPtr.Zero,Int32Rect.Empty,System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
             return bitmapSource;
-
-
         }
 
 
@@ -104,8 +102,9 @@ namespace Zxing_二维码条形码_Test
         /// <param name="e"></param>
         private void btn_Click(object sender, RoutedEventArgs e)
         {
-            //ewm.Source = createQRCode("牛逼不", 50, 50);
-            txm.Source = createItem("9321048088888888888888888888888", 50, 50);
+            var t = tb_content.Text.Trim().ToString();
+            ewm.Source = createQRCode(t, 50, 50);
+            //txm.Source = createItem("9321048088888888888888888888888", 50, 50);
         }
     }
 }
