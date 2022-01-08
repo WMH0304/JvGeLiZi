@@ -586,7 +586,7 @@ namespace 多线程
              * ContinueWith 连接两个任务，当先驱任务执行完后，延续任务会以异步方式开启
              * 
              */
-            /* Console.WriteLine("延续任务");
+             Console.WriteLine("延续任务");
               Task taskA = Task.Run(() => Console.WriteLine("一个任务"))
                   //ContinueWith创建一个在目标 Task 完成时异步执行的延续任务。
                   .ContinueWith(an => Console.WriteLine("我是一个任务的延续任务___派大星"));
@@ -607,7 +607,7 @@ namespace 多线程
 
               Task.WaitAll(taskB, taskC);
               Console.WriteLine("结束");
-                 */
+                 
             #endregion
 
             #region ThreadStart
